@@ -5,14 +5,16 @@
 
 import logging
 
-from logging_mv_integrations.support import (
+from logging_mv_integrations.tune_logging_handler import (
     get_tune_logger_with_handler
 )
-
+from logging_mv_integrations import (
+    TuneLoggingFormat
+)
 
 def get_logger(
     logger_version,
-    logger_format,
+    logger_format=TuneLoggingFormat.JSON,
     logger_name=None,
     module_name=None,
     logger_level=logging.NOTSET,
@@ -47,6 +49,5 @@ def get_logger_name(module_name):
     logger_name = logger_name_parts[0]
     if len(logger_name_parts) > 0:
         logger_name += '.' + logger_name_parts[-1]
-
 
     return logger_name

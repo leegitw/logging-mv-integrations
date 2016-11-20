@@ -13,9 +13,7 @@ __license__ = 'Apache 2.0'
 
 __python_required_version__ = (3, 0)
 
-from logging_mv_integrations.support.utils import (
-    get_tune_logger_with_handler
-)
+
 from .logger_json_lexer import (
     LoggerJsonLexer
 )
@@ -36,6 +34,7 @@ from .tune_logging import (
     TuneLogging
 )
 from .tune_logging_handler import (
-    TuneLoggingHandler
+    TuneLoggingHandler,
+    get_tune_logger_with_handler
 )
 

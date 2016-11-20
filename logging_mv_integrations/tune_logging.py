@@ -367,10 +367,10 @@ class TuneLogging(_TuneLoggingBase):
 
     def __init__(
         self,
-        logger_name,
-        logger_version,
-        logger_format=None,
         logger_level=logging.NOTSET,
+        logger_format=None,
+        logger_name=None,
+        logger_version=None,
         ru_maxrss_start=None
     ):
         # print('TuneLogging', '__init__')
@@ -383,7 +383,6 @@ class TuneLogging(_TuneLoggingBase):
             ru_maxrss_start=ru_maxrss_start
         )
 
-        # pprint(vars(self))
         self.logger = self.create_logger()
 
     def get_logger(
@@ -452,3 +451,8 @@ class TuneLogging(_TuneLoggingBase):
 
         return logger
 
+    def setLevel(
+        self,
+        logger_level=logging.NOTSET
+    ):
+        self.logger.setLevel(logger_level)

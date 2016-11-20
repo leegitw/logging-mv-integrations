@@ -10,7 +10,5 @@ from .singleton import (
 from .utils import (
     safe_str,
     safe_int,
-    safe_float,
-
-    get_tune_logger_with_handler
+    safe_float
 )

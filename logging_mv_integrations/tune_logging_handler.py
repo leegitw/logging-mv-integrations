@@ -112,3 +112,53 @@ class TuneLoggingHandler(metaclass=Singleton):
             )
 
         return log_formatter
+
+
+def get_tune_logger_with_handler(
+    logger_name,
+    logger_version,
+    logger_format,
+    logger_level=logging.NOTSET,
+    logger=None
+):
+    if not logger_name:
+        raise ValueError(
+            "Undefined 'logger_name'"
+        )
+    if not logger_version:
+        raise ValueError(
+            "Undefined 'logger_version'"
+        )
+    if not logger_format:
+        raise ValueError(
+            "Undefined 'logger_format'"
+        )
+
+    if not TuneLoggingFormat.validate(logger_format):
+        raise ValueError(
+            "Invalid 'logger_format': {}".format(
+                logger_format
+            )
+        )
+
+    tune_loggin_handler = TuneLoggingHandler(
+        logger_format=logger_format,
+        logger_name=logger_name,
+        logger_version=logger_version
+    )
+
+    tune_loggin_handler.add_logger_version(
+        logger_name,
+        logger_version
+    )
+
+    if logger_level == logging.NOTSET:
+        logger_level = logging.INFO
+
+    if logger is None:
+        logger = logging.getLogger(logger_name)
+
+    logger.addHandler(tune_loggin_handler.log_handler)
+    logger.setLevel(level=logger_level)
+
+    return logger
