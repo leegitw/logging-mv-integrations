@@ -13,7 +13,6 @@ from pprintpp import pprint
 
 
 class LoggingStandardFormatter(coloredlogs.ColoredFormatter):
-
     def converter(self, timestamp):
         tz = tzlocal.get_localzone()
         return dt.datetime.fromtimestamp(timestamp, tz)

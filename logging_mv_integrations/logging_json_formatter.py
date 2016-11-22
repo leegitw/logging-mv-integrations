@@ -18,15 +18,12 @@ from .logger_json_lexer import LoggerJsonLexer
 
 COLOR_SCHEME = {
     pygments.token.Token: ('darkgray', 'darkgray'),
-
     pygments.token.Whitespace: ('', ''),
     pygments.token.Comment: ('', ''),
     pygments.token.Comment.Preproc: ('', ''),
-
     pygments.token.Keyword: ('white', 'white'),
     pygments.token.Keyword.Constant: ('fuchsia', 'fuchsia'),
     pygments.token.Keyword.Type: ('white', 'white'),
-
     pygments.token.Operator.Word: ('', ''),
     pygments.token.Name.Builtin: ('', ''),
     pygments.token.Name.Function: ('', ''),
@@ -37,35 +34,27 @@ COLOR_SCHEME = {
     pygments.token.Name.Variable: ('', ''),
     pygments.token.Name.Constant: ('', ''),
     pygments.token.Name.Attribute: ('', ''),
-
     pygments.token.Name.Tag: ('darkgray', 'darkgray'),
-
     pygments.token.String: ('lightgray', 'lightgray'),
     pygments.token.String.Double: ('lightgray', 'lightgray'),
-
     pygments.token.String.Double.Logger.Asctime: ('lightgray', 'lightgray'),
-
     pygments.token.String.Double.Logger.Name: ('teal', 'turquoise'),
     pygments.token.String.Double.Logger.Message: ('brown', 'yellow'),
     pygments.token.String.Double.Logger.Message.Success: ('darkgreen', 'green'),
     pygments.token.String.Double.Logger.Message.Error: ('red', 'red'),
     pygments.token.String.Double.Logger.Curl: ('darkgreen', 'green'),
-
     pygments.token.String.Double.Logger.Level.Info: ('white', 'white'),
     pygments.token.String.Double.Logger.Level.Debug: ('darkgreen', 'green'),
     pygments.token.String.Double.Logger.Level.Warning: ('brown', 'yellow'),
     pygments.token.String.Double.Logger.Level.Error: ('red', 'red'),
     pygments.token.String.Double.Logger.Level.Critical: ('*red*', '*red*'),
-
     pygments.token.Number: ('white', 'white'),
     pygments.token.Number.Integer: ('white', 'white'),
-
     pygments.token.Generic.Deleted: ('', ''),
     pygments.token.Generic.Inserted: ('', ''),
     pygments.token.Generic.Heading: ('', ''),
     pygments.token.Generic.Subheading: ('', ''),
     pygments.token.Generic.Error: ('red', 'red'),
-
     pygments.token.Error: ('red', 'red')
 }
 
@@ -75,31 +64,17 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
     __logger_versions = {}
 
     @property
-    def logger_versions(
-        self
-    ):
+    def logger_versions(self):
         return self.__logger_versions
 
     @logger_versions.setter
-    def logger_versions(
-        self,
-        value
-    ):
+    def logger_versions(self, value):
         self.__logger_versions = value
 
-    def add_logger_version(
-        self,
-        logger_name,
-        logger_version
-    ):
-        self.__logger_versions.update({
-            logger_name: logger_version
-        })
+    def add_logger_version(self, logger_name, logger_version):
+        self.__logger_versions.update({logger_name: logger_version})
 
-    def get_logger_version(
-        self,
-        logger_name
-    ):
+    def get_logger_version(self, logger_name):
         _logger_version = None
         logger_name_parts = logger_name.split('.')
 
@@ -114,18 +89,10 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
 
         return _logger_version
 
-    def __init__(
-        self,
-        logger_name,
-        logger_version,
-        *args,
-        **kwargs
-    ):
+    def __init__(self, logger_name, logger_version, *args, **kwargs):
         _logger_name = logger_name.split('.')[0]
         if __name__ not in self.logger_versions:
-            self.add_logger_version(
-                _logger_name, logger_version
-            )
+            self.add_logger_version(_logger_name, logger_version)
         super(LoggingJsonFormatter, self).__init__(*args, **kwargs)
 
     def converter(self, timestamp):
@@ -145,11 +112,7 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
         for key, value in log_record.items():
             log_record_clean[key] = value[0] if value else None
 
-        formatted_json = json.dumps(
-            log_record_clean,
-            default=self.json_default,
-            cls=self.json_encoder
-        )
+        formatted_json = json.dumps(log_record_clean, default=self.json_default, cls=self.json_encoder)
 
         return formatted_json
 
@@ -179,9 +142,7 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
 
         self.add_fields(log_record, record, message_dict)
         log_record = self.process_log_record(log_record)
-        log_record['version'] = self.get_logger_version(
-            logger_name=log_record['name']
-        )
+        log_record['version'] = self.get_logger_version(logger_name=log_record['name'])
 
         prefix_log = OrderedDict()
         extra_log = OrderedDict()

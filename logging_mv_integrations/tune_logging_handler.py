@@ -4,18 +4,10 @@
 #  @namespace logging_mv_integrations
 
 import logging
-from .logging_format import (
-    TuneLoggingFormat
-)
-from .logging_json_formatter import (
-    LoggingJsonFormatter
-)
-from .logging_standard_formatter import (
-    LoggingStandardFormatter
-)
-from logging_mv_integrations.support import (
-    Singleton
-)
+from .logging_format import (TuneLoggingFormat)
+from .logging_json_formatter import (LoggingJsonFormatter)
+from .logging_standard_formatter import (LoggingStandardFormatter)
+from logging_mv_integrations.support import (Singleton)
 
 
 class TuneLoggingHandler(metaclass=Singleton):
@@ -23,16 +15,9 @@ class TuneLoggingHandler(metaclass=Singleton):
     __log_formatter = None
     __log_handler = None
 
-    def add_logger_version(
-        self,
-        logger_name,
-        logger_version
-    ):
+    def add_logger_version(self, logger_name, logger_version):
         if hasattr(self.log_formatter, 'add_logger_version'):
-            self.log_formatter.add_logger_version(
-                logger_name,
-                logger_version
-            )
+            self.log_formatter.add_logger_version(logger_name, logger_version)
 
     @property
     def log_formatter(self):
@@ -54,33 +39,18 @@ class TuneLoggingHandler(metaclass=Singleton):
         # print('TuneLoggingHandler', 'log_handler.setter', type(value).__name__, id(value))
         self.__log_handler = value
 
-    def __init__(
-        self,
-        logger_name,
-        logger_version,
-        logger_format
-    ):
+    def __init__(self, logger_name, logger_version, logger_format):
         self.log_formatter = self.get_logger_formatter(
-            logger_name=logger_name,
-            logger_version=logger_version,
-            logger_format=logger_format
+            logger_name=logger_name, logger_version=logger_version, logger_format=logger_format
         )
 
         self.log_handler = logging.StreamHandler()
         self.log_handler.setFormatter(self.log_formatter)
 
     @staticmethod
-    def get_logger_formatter(
-        logger_name,
-        logger_version,
-        logger_format
-    ):
+    def get_logger_formatter(logger_name, logger_version, logger_format):
         if not TuneLoggingFormat.validate(logger_format):
-            raise ValueError(
-                "Invalid 'logger_format': '{}'".format(
-                    logger_format
-                )
-            )
+            raise ValueError("Invalid 'logger_format': '{}'".format(logger_format))
 
         if logger_format == TuneLoggingFormat.JSON:
             log_formatter = LoggingJsonFormatter(
@@ -114,43 +84,22 @@ class TuneLoggingHandler(metaclass=Singleton):
         return log_formatter
 
 
-def get_tune_logger_with_handler(
-    logger_name,
-    logger_version,
-    logger_format,
-    logger_level=logging.NOTSET,
-    logger=None
-):
+def get_tune_logger_with_handler(logger_name, logger_version, logger_format, logger_level=logging.NOTSET, logger=None):
     if not logger_name:
-        raise ValueError(
-            "Undefined 'logger_name'"
-        )
+        raise ValueError("Undefined 'logger_name'")
     if not logger_version:
-        raise ValueError(
-            "Undefined 'logger_version'"
-        )
+        raise ValueError("Undefined 'logger_version'")
     if not logger_format:
-        raise ValueError(
-            "Undefined 'logger_format'"
-        )
+        raise ValueError("Undefined 'logger_format'")
 
     if not TuneLoggingFormat.validate(logger_format):
-        raise ValueError(
-            "Invalid 'logger_format': {}".format(
-                logger_format
-            )
-        )
+        raise ValueError("Invalid 'logger_format': {}".format(logger_format))
 
     tune_loggin_handler = TuneLoggingHandler(
-        logger_format=logger_format,
-        logger_name=logger_name,
-        logger_version=logger_version
+        logger_format=logger_format, logger_name=logger_name, logger_version=logger_version
     )
 
-    tune_loggin_handler.add_logger_version(
-        logger_name,
-        logger_version
-    )
+    tune_loggin_handler.add_logger_version(logger_name, logger_version)
 
     if logger_level == logging.NOTSET:
         logger_level = logging.INFO
