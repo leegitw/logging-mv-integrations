@@ -18,7 +18,6 @@ from pygments.token import (
 )
 from pprintpp import pprint
 
-
 STANDARD_TYPES.update({
     String.Double.Logger: 's2l',
     String.Double.Logger.Asctime: 's2la',
@@ -72,9 +71,7 @@ class LoggerJsonLexer(pygments.lexer.RegexLexer):
     attr_message = r'"message"'
 
     tokens = {
-        'whitespace': [
-            (r'\s+', Text),
-        ],
+        'whitespace': [(r'\s+', Text),],
 
         # represents a simple terminal value
         'simplevalue': [
@@ -83,19 +80,15 @@ class LoggerJsonLexer(pygments.lexer.RegexLexer):
             # (('%(int_part)s(%(frac_part)s%(exp_part)s|'
             #   '%(exp_part)s|%(frac_part)s)') % vars(),
             #  Number.Float),
-
             (int_part, Number.Integer),
             (value_asctime, String.Double.Logger.Asctime),
-
             (value_level_info, String.Double.Logger.Level.Info),
             (value_level_debug, String.Double.Logger.Level.Debug),
             (value_level_warning, String.Double.Logger.Level.Warning),
             (value_level_error, String.Double.Logger.Level.Error),
             (value_level_critical, String.Double.Logger.Level.Critical),
-
             (r'"[\w\:\s]*(Success)[\w\:\s]*"', String.Double.Logger.Message.Success),
             (r'"[\w\:\s]*(Fail|Error)[\w\:\s]*"', String.Double.Logger.Message.Error),
-
             (r'"(\\\\|\\"|[^"])*"', String.Double),
         ],
 
@@ -111,24 +104,24 @@ class LoggerJsonLexer(pygments.lexer.RegexLexer):
 
         # a json object - { attr, attr, ... }
         'json_object': [
-            pygments.lexer.include('whitespace'),
-            (r'("name")(:)(\s+)(".+?")',
-             pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Name),
-             'json_attribute'),
-            (r'("message")(:)(\s+)("[\w\:\s]*(Success)[\w\:\s]*")',
-             pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Message.Success),
-             'json_attribute'),
-             (r'("message")(:)(\s+)("[\w\:\s]*(Fail|Error)[\w\:\s]*")',
-              pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Message.Error),
-             'json_attribute'),
-            (r'("message")(:)(\s+)(".+?")',
-             pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Message),
-             'json_attribute'),
-            (r'("request_curl"|"error_request_curl")(:)(\s+)(".+?")',
-             pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Curl),
-             'json_attribute'),
-            (r'"(\\\\|\\"|[^"])*"', Name.Tag, 'json_attribute'),
-            (r'\}', Punctuation, '#pop')
+            pygments.lexer.include('whitespace'), (
+                r'("name")(:)(\s+)(".+?")',
+                pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Name), 'json_attribute'
+            ), (
+                r'("message")(:)(\s+)("[\w\:\s]*(Success)[\w\:\s]*")',
+                pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Message.Success),
+                'json_attribute'
+            ), (
+                r'("message")(:)(\s+)("[\w\:\s]*(Fail|Error)[\w\:\s]*")',
+                pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Message.Error),
+                'json_attribute'
+            ), (
+                r'("message")(:)(\s+)(".+?")',
+                pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Message), 'json_attribute'
+            ), (
+                r'("request_curl"|"error_request_curl")(:)(\s+)(".+?")',
+                pygments.lexer.bygroups(Name.Tag, Punctuation, Text, String.Double.Logger.Curl), 'json_attribute'
+            ), (r'"(\\\\|\\"|[^"])*"', Name.Tag, 'json_attribute'), (r'\}', Punctuation, '#pop')
         ],
 
         # json array - [ value, value, ... }
@@ -148,7 +141,5 @@ class LoggerJsonLexer(pygments.lexer.RegexLexer):
         ],
 
         # the root of a json document would be a value
-        'root': [
-            pygments.lexer.include('json_value'),
-        ],
+        'root': [pygments.lexer.include('json_value'),],
     }

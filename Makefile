@@ -4,169 +4,225 @@
 # copyright Copyright (c) 2016, TUNE Inc. (http://www.tune.com)
 #
 
+.PHONY: clean version build dist local-dev yapf pyflakes pylint
+
+PACKAGE := logging-mv-integrations
+PACKAGE_PREFIX := logging_mv_integrations
+
 PYTHON3 := $(shell which python3)
-PYTHON27 := $(shell which python2.7)
 PIP3    := $(shell which pip3)
+
 PY_MODULES := pip setuptools pylint flake8 pprintpp pep8 requests six sphinx wheel retry validators python-dateutil
 PYTHON3_SITE_PACKAGES := $(shell python3 -c "import site; print(site.getsitepackages()[0])")
 
-LOGGING_MV_INTGS_PKG := logging-mv-integrations
-LOGGING_MV_INTGS_PKG_PREFIX := logging_mv_integrations
-
-PKG_SUFFIX := py3-none-any.whl
+PACKAGE_SUFFIX := py3-none-any.whl
+PACKAGE_WILDCARD := $(PACKAGE)-*
+PACKAGE_PREFIX_WILDCARD := $(PACKAGE_PREFIX)-*
+PACKAGE_PATTERN := $(PACKAGE_PREFIX)-*-$(PACKAGE_SUFFIX)
 
 VERSION := $(shell $(PYTHON3) setup.py version)
-LOGGING_MV_INTGS_WHEEL_ARCHIVE := dist/$(LOGGING_MV_INTGS_PKG_PREFIX)-$(VERSION)-$(PKG_SUFFIX)
+WHEEL_ARCHIVE := dist/$(PACKAGE_PREFIX)-$(VERSION)-$(PACKAGE_SUFFIX)
 
-LOGGING_MV_INTGS_FILES := $(shell find logging_mv_integrations ! -name '__init__.py' -type f -name "*.py")
-LINT_REQ_FILE := requirements-pylint.txt
+PACKAGE_FILES := $(shell find $(PACKAGE_PREFIX) ! -name '__init__.py' -type f -name "*.py")
+TOOLS_REQ_FILE := requirements-tools.txt
 REQ_FILE      := requirements.txt
 SETUP_FILE    := setup.py
-ALL_FILES     := $(LOGGING_MV_INTGS_FILES) $(REQ_FILE) $(SETUP_FILE)
+ALL_FILES     := $(PACKAGE_FILES) $(REQ_FILE) $(SETUP_FILE)
 
-# Report the current logging-mv-integrations version.
+# Report the current package version.
 version:
-	@echo MV Integration Base Version: $(VERSION)
+	@echo "======================================================"
+	@echo version $(PACKAGE)
+	@echo "======================================================"
+	@echo $(REQUESTS_MV_INTGS_PKG) $(VERSION)
 
 # Install Python 3 via Homebrew.
 brew-python:
+	@echo "======================================================"
+	@echo brew-python
+	@echo "======================================================"
+	@echo $(shell which python3)
+	brew uninstall -f python3
+	@echo $(shell which python3)
+	brew update
 	brew install python3
-	$(eval $(shell which python3))
+	@echo $(shell which python3)
 	$(PIP3) install --upgrade $(PY_MODULES)
-
-# Upgrade pip. Note that this does not install pip if you don't have it.
-# Pip must already be installed to work with this Makefile.
-pip:
-	$(PIP3) install --upgrade pip
 
 clean:
 	@echo "======================================================"
-	@echo clean
+	@echo clean $(PACKAGE)
 	@echo "======================================================"
 	rm -fR __pycache__ venv "*.pyc" build/*    \
-		$(LOGGING_MV_INTGS_PKG_PREFIX)/__pycache__/         \
-		$(LOGGING_MV_INTGS_PKG_PREFIX)/helpers/__pycache__/ \
-		$(LOGGING_MV_INTGS_PKG_PREFIX).egg-info/*
+		$(PACKAGE_PREFIX)/__pycache__/         \
+		$(PACKAGE_PREFIX)/helpers/__pycache__/ \
+		$(PACKAGE_PREFIX).egg-info/*
 	find ./* -maxdepth 0 -name "*.pyc" -type f -delete
-	find $(LOGGING_MV_INTGS_PKG_PREFIX) -name "*.pyc" -type f -delete
+	find $(PACKAGE_PREFIX) -name "*.pyc" -type f -delete
 
-# Install the project requirements.
-requirements: $(REQ_FILE) pip
-	$(PIP3) install --upgrade -r $(REQ_FILE)
-
-# Make a project distributable.
-dist: clean
+uninstall-package: clean
 	@echo "======================================================"
-	@echo dist
-	@echo "======================================================"
-	@echo Building: $(LOGGING_MV_INTGS_WHEEL_ARCHIVE)
-	$(PYTHON3) --version
-	find ./dist/ -name $(LOGGING_MV_INTGS_PKG_PREFIX_PATTERN) -exec rm -vf {} \;
-	$(PYTHON3) $(SETUP_FILE) bdist_wheel
-	$(PYTHON3) $(SETUP_FILE) bdist_egg
-	$(PYTHON3) $(SETUP_FILE) sdist --format=zip,gztar
-	ls -al ./dist/$(LOGGING_MV_INTGS_PKG_PREFIX_PATTERN)
-
-# DIST UPDATE INTENTIONALLY REMOVED
-
-# Build and install the module. Apparently this target isn't really used
-# anymore. It's a candidate for removal, or at least redefinition, since
-# "build" is a useful target, generally speaking.
-build: $(ALL_FILES) pip requirements
-	$(PYTHON3) $(SETUP_FILE) clean
-	$(PYTHON3) $(SETUP_FILE) build
-	$(PYTHON3) $(SETUP_FILE) install
-
-uninstall:
-	@echo "======================================================"
-	@echo uninstall $(LOGGING_MV_INTGS_PKG)
+	@echo uninstall-package $(PACKAGE)
 	@echo "======================================================"
 	$(PIP3) install --upgrade list
-	@if $(PIP3) list --format=legacy | grep -F $(LOGGING_MV_INTGS_PKG) > /dev/null; then \
-		echo "python package $(LOGGING_MV_INTGS_PKG) Found"; \
-		$(PIP3) uninstall --yes $(LOGGING_MV_INTGS_PKG); \
+	@if $(PIP3) list --format=legacy | grep -F $(PACKAGE) > /dev/null; then \
+		echo "python package $(PACKAGE) Found"; \
+		$(PIP3) uninstall --yes $(PACKAGE); \
+		echo "uninstall package $(PACKAGE)"; \
 	else \
-		echo "python package $(LOGGING_MV_INTGS_PKG) Not Found"; \
-	fi;
+		echo "python package $(PACKAGE) Not Found"; \
+	fi
 
-remove-package: uninstall
+remove-package: uninstall-package
 	@echo "======================================================"
-	@echo remove-package $(LOGGING_MV_INTGS_PKG)
+	@echo remove-package $(PACKAGE_PREFIX)
 	@echo "======================================================"
-	rm -fR $(PYTHON3_SITE_PACKAGES)/$(LOGGING_MV_INTGS_PKG_PREFIX)*
+	rm -fR $(PYTHON3_SITE_PACKAGES)/$(PACKAGE_PREFIX)*
 
 # Install the module from a binary distribution archive.
 install: remove-package
 	@echo "======================================================"
-	@echo install $(LOGGING_MV_INTGS_PKG)
+	@echo install $(PACKAGE)
 	@echo "======================================================"
 	$(PIP3) install --upgrade pip
-	$(PIP3) install --upgrade $(LOGGING_MV_INTGS_WHEEL_ARCHIVE)
-	$(PIP3) freeze | grep $(LOGGING_MV_INTGS_PKG)
+	$(PIP3) install --upgrade $(WHEEL_ARCHIVE)
+	$(PIP3) freeze | grep $(PACKAGE)
 
-# Install project for local development. Changes to the files will be reflected in installed code
-local-dev-editable: remove-package
+freeze:
 	@echo "======================================================"
-	@echo local-dev-editable $(LOGGING_MV_INTGS_PKG)
-	@echo "======================================================"
-	$(PIP3) install --upgrade freeze
-	$(PIP3) install --upgrade --editable .
-	$(PIP3) freeze | grep $(LOGGING_MV_INTGS_PKG)
-
-local-dev: remove-package
-	@echo "======================================================"
-	@echo local-dev $(LOGGING_MV_INTGS_PKG)
+	@echo freeze $(PACKAGE)
 	@echo "======================================================"
 	$(PIP3) install --upgrade freeze
-	$(PIP3) install --upgrade .
-	$(PIP3) freeze | grep $(LOGGING_MV_INTGS_PKG)
+	$(PIP3) freeze | grep $(PACKAGE)
 
-dist:
-	rm -fR ./dist/*
-	$(PYTHON3) $(SETUP_FILE) sdist --format=zip,gztar upload
-	$(PYTHON27) $(SETUP_FILE) bdist_egg upload
-	$(PYTHON27) $(SETUP_FILE) bdist_wheel upload
-	$(PYTHON3) $(SETUP_FILE) bdist_egg upload
-	$(PYTHON3) $(SETUP_FILE) bdist_wheel upload
-
-build:
-	$(PIP3) install --upgrade -r requirements.txt
-	$(PYTHON3) $(SETUP_FILE) clean
-	$(PYTHON3) $(SETUP_FILE) build
-	$(PYTHON3) $(SETUP_FILE) install
-
+fresh: dist dist-update install
+	@echo "======================================================"
+	@echo fresh completed $(PACKAGE)
+	@echo "======================================================"
 
 # Register the module with PyPi.
 register:
 	$(PYTHON3) $(SETUP_FILE) register
 
+local-dev-editable: remove-package
+	@echo "======================================================"
+	@echo local-dev-editable $(PACKAGE)
+	@echo "======================================================"
+	$(PIP3) install --upgrade freeze
+	$(PIP3) install --upgrade --editable .
+	$(PIP3) freeze | grep $(PACKAGE)
+
+local-dev: remove-package
+	@echo "======================================================"
+	@echo local-dev $(PACKAGE)
+	@echo "======================================================"
+	$(PIP3) install --upgrade freeze
+	$(PIP3) install --upgrade .
+	$(PIP3) freeze | grep $(PACKAGE)
+
+dist: clean
+	@echo "======================================================"
+	@echo dist $(PACKAGE)
+	@echo "======================================================"
+	$(PIP3) install --upgrade -r requirements.txt
+	find ./dist/ -name $(PACKAGE_PATTERN) -exec rm -vf {} \;
+	$(PYTHON3) $(SETUP_FILE) bdist_wheel upload
+	$(PYTHON3) $(SETUP_FILE) bdist_egg upload
+	$(PYTHON3) $(SETUP_FILE) sdist --format=zip,gztar upload
+	ls -al ./dist/$(PACKAGE_PREFIX_WILDCARD)
+
+build: clean
+	@echo "======================================================"
+	@echo build $(PACKAGE)
+	@echo "======================================================"
+	$(PIP3) install --upgrade -r requirements.txt
+	find ./dist/ -name $(PACKAGE_PATTERN) -exec rm -vf {} \;
+	$(PYTHON3) $(SETUP_FILE) clean
+	$(PYTHON3) $(SETUP_FILE) build
+	$(PYTHON3) $(SETUP_FILE) install
+	ls -al ./dist/$(PACKAGE_PREFIX_WILDCARD)
+
+tools-requirements: $(TOOLS_REQ_FILE)
+	@echo "======================================================"
+	@echo tools-requirements
+	@echo "======================================================"
+	$(PIP3) install --upgrade -r $(TOOLS_REQ_FILE)
+
+pep8: tools-requirements
+	@echo "======================================================"
+	@echo pep8 $(PACKAGE)
+	@echo "======================================================"
+	@echo pep8: $(REQUESTS_MV_INTGS_FILES)
+	$(PYTHON3) -m pep8 --config .pep8 $(REQUESTS_MV_INTGS_FILES)
+
+pyflakes: tools-requirements
+	@echo "======================================================"
+	@echo pyflakes $(PACKAGE)
+	@echo "======================================================"
+	@echo pyflakes: $(PACKAGE_FILES)
+	$(PIP3) install --upgrade pyflakes
+	$(PYTHON3) -m pyflakes $(PACKAGE_FILES)
+
+pylint: tools-requirements
+	@echo "======================================================"
+	@echo pylint $(PACKAGE)
+	@echo "======================================================"
+	@echo pylint: $(PACKAGE_FILES)
+	$(PIP3) install --upgrade pylint
+	$(PYTHON3) -m pylint --rcfile .pylintrc $(PACKAGE_FILES) --disable=C0330,F0401,E0611,E0602,R0903,C0103,E1121,R0913,R0902,R0914,R0912,W1202,R0915,C0302 | more -30
+
+yapf: tools-requirements
+	@echo "======================================================"
+	@echo yapf $(PACKAGE)
+	@echo "======================================================"
+	@echo yapf: $(PACKAGE_FILES)
+	$(PYTHON3) -m yapf --style .style.yapf --in-place $(PACKAGE_FILES)
+
+lint: tools-requirements
+	@echo "======================================================"
+	@echo lint $(PACKAGE)
+	@echo "======================================================"
+	pylint --rcfile .pylintrc $(REQUESTS_MV_INTGS_FILES) | more
+
 flake8:
-	flake8 --ignore=F401,E265,E129 tune
-	flake8 --ignore=E123,E126,E128,E265,E501 tests
-
-lint: clean
-	pylint --rcfile .pylintrc logging_mv_integrations | more
-
-lint-requirements: $(LINT_REQ_FILE)
-	$(PIP3) install --upgrade -f $(LINT_REQ_FILE)
-
-pep8: lint-requirements
-	@echo pep8: $(LOGGING_MV_INTGS_FILES)
-	$(PYTHON3) -m pep8 --config .pep8 $(LOGGING_MV_INTGS_FILES)
-
-pyflakes: lint-requirements
-	@echo pyflakes: $(LOGGING_MV_INTGS_FILES)
-	$(PYTHON3) -m pyflakes $(LOGGING_MV_INTGS_FILES)
-
-pylint: lint-requirements
-	@echo pylint: $(LOGGING_MV_INTGS_FILES)
-	$(PYTHON3) -m pylint --rcfile .pylintrc $(LOGGING_MV_INTGS_FILES) --disable=C0330,F0401,E0611,E0602,R0903,C0103,E1121,R0913,R0902,R0914,R0912,W1202,R0915,C0302 | more -30
+	@echo "======================================================"
+	@echo flake8 $(PACKAGE)
+	@echo "======================================================"
+	flake8 --ignore=F401,E265,E129 $(PACKAGE_PREFIX)
 
 site-packages:
+	@echo "======================================================"
+	@echo site-packages $(PACKAGE)
+	@echo "======================================================"
 	@echo $(PYTHON3_SITE_PACKAGES)
 
 list-package:
-	ls -al $(PYTHON3_SITE_PACKAGES)/$(LOGGING_MV_INTGS_PKG_PREFIX)*
+	@echo "======================================================"
+	@echo list-packages $(PACKAGE)
+	@echo "======================================================"
+	ls -al $(PYTHON3_SITE_PACKAGES)/$(PACKAGE_PREFIX)*
 
+tests: build
+	$(PYTHON3) ./tests/tune_reporting_tests.py $(api_key)
 
-.PHONY: brew-python clean register lint pylint pep8 pyflakes examples analysis
+tests-travis-ci:
+	flake8 --ignore=F401,E265,E129 tune
+	flake8 --ignore=E123,E126,E128,E265,E501 tests
+	$(PYTHON3) ./tests/tune_reporting_tests.py $(api_key)
+
+docs-sphinx-gen:
+	rm -fR ./docs/sphinx/tune_reporting/*
+	sphinx-apidoc -o ./docs/sphinx/tune_reporting/ ./tune_reporting
+
+docs-install: venv
+	. venv/bin/activate; pip install -r docs/sphinx/requirements.txt
+
+docs-sphinx: docs-install
+	rm -fR ./docs/sphinx/_build
+	cd docs/sphinx && make html
+	x-www-browser docs/sphinx/_build/html/index.html
+
+docs-doxygen:
+	rm -fR ./docs/doxygen/*
+	sudo doxygen docs/Doxyfile
+	x-www-browser docs/doxygen/html/index.html

@@ -10,35 +10,75 @@ import json
 import logging
 from string import Template
 
-from logging_mv_integrations.support import (
-    safe_str,
-    safe_int,
-    safe_float
-)
+from logging_mv_integrations.support import (safe_str, safe_int, safe_float)
 
 TUNE_STANDARD_FORMAT_SUPPORTED_KEYS = {
     # 'pathname': {'type': str, 'order': 0, 'label': True},
     # 'lineno': {'type': int, 'order': 1, 'label': True},
-
-    'asctime': {'type': None, 'label': False, 'order': 2, 'fmt': '{:30} '},
-    'levelname': {'type': None, 'label': False, 'order': 3, 'fmt': '{:7} '},
-    'version': {'type': str, 'label': False, 'order': 4, 'fmt': '{} '},
+    'asctime': {
+        'type': None,
+        'label': False,
+        'order': 2,
+        'fmt': '{:30} '
+    },
+    'levelname': {
+        'type': None,
+        'label': False,
+        'order': 3,
+        'fmt': '{:7} '
+    },
+    'version': {
+        'type': str,
+        'label': False,
+        'order': 4,
+        'fmt': '{} '
+    },
 
     #  'memory_total': {'type': None, 'label': False, 'order': 5, 'fmt': '{:>9} '},
     #  'memory_used': {'type': None, 'label': False, 'order': 6, 'fmt': '[{:>9}] '},
 
     #  'integration_name': {'type': str, 'label': False, 'order': 7},
     #  'integration_version': {'type': str, 'label': False, 'order': 7},
-    'message': {'type': str, 'label': False, 'order': 8},
-
-    'start_date': {'type': str, 'label': True, 'order': 10},
-    'end_date': {'type': str, 'label': True, 'order': 11},
-
-    'data_size': {'type': int, 'label': True, 'order': 12},
-    'row_count': {'type': int, 'label': True, 'order': 13},
-    'job_row_count': {'type': int, 'label': True, 'order': 14},
-    'count': {'type': int, 'label': True, 'order': 15},
-    'data': {'type': str, 'label': True, 'order': 16}
+    'message': {
+        'type': str,
+        'label': False,
+        'order': 8
+    },
+    'start_date': {
+        'type': str,
+        'label': True,
+        'order': 10
+    },
+    'end_date': {
+        'type': str,
+        'label': True,
+        'order': 11
+    },
+    'data_size': {
+        'type': int,
+        'label': True,
+        'order': 12
+    },
+    'row_count': {
+        'type': int,
+        'label': True,
+        'order': 13
+    },
+    'job_row_count': {
+        'type': int,
+        'label': True,
+        'order': 14
+    },
+    'count': {
+        'type': int,
+        'label': True,
+        'order': 15
+    },
+    'data': {
+        'type': str,
+        'label': True,
+        'order': 16
+    }
 }
 
 
@@ -92,10 +132,7 @@ class LoggingPercentStyle(object):
                     else:
                         fmt_record_item += meta_fmt.format(record.__dict__[key])
                 except ValueError as va_ex:
-                    fmt_record_item += "{}: '{}'".format(
-                        type(record.__dict__[key]).__name__,
-                        str(record.__dict__[key])
-                    )
+                    fmt_record_item += "{}: '{}'".format(type(record.__dict__[key]).__name__, str(record.__dict__[key]))
 
                 hash = "{0:03d}".format(meta['order'])
                 fmt_record_items[hash] = fmt_record_item
@@ -137,6 +174,7 @@ class LoggingStringTemplateStyle(LoggingPercentStyle):
 
     def format(self, record):
         return self._tpl.substitute(**record.__dict__)
+
 
 logging._STYLES = {
     '%': (LoggingPercentStyle, logging.BASIC_FORMAT),

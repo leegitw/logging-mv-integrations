@@ -4,8 +4,7 @@
 #  @namespace logging_mv_integrations
 
 from .singleton import (
-    Singleton,
-    singleton
+    Singleton
 )
 from .utils import (
     safe_str,
