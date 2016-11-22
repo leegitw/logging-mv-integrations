@@ -6,11 +6,9 @@ import logging
 from pythonjsonlogger import jsonlogger
 from logging.config import dictConfig
 
-
 logger = logging.getLogger()
 handler = logging.StreamHandler()
-formatter = logging.Formatter(
-        '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel(logging.DEBUG)
@@ -28,22 +26,16 @@ formatter = jsonlogger.JsonFormatter()
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
-
 logger.info("Hello World")
-
 
 log_config = {
     'version': 1,
-
-
     'formatters': {
         'json': {
             '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
             'fmt': '[%(asctime)s] %(levelname)s::[%(process)d %(thread)d]::%(module)s - %(message)s',
         },
     },
-
-
     'handlers': {
         'stream': {
             'level': 'DEBUG',
@@ -51,23 +43,17 @@ log_config = {
             'class': 'logging.StreamHandler',
         },
     },
-
-
-    'loggers':  {
+    'loggers': {
         'my_logger': {
-        'handlers': ['stream'],
-        'level': 'DEBUG',
-        'propagate': True,
+            'handlers': ['stream'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     }
-
-
 }
-
 
 dictConfig(log_config)
 logger = logging.getLogger('my_logger')
-
 
 logger.debug('foo')
 logger.debug('bar')

@@ -40,23 +40,8 @@ class TestJsonLogger(unittest.TestCase):
 
     def testFormatKeys(self):
         supported_keys = [
-            'asctime',
-            'created',
-            'filename',
-            'funcName',
-            'levelname',
-            'levelno',
-            'lineno',
-            'module',
-            'msecs',
-            'message',
-            'name',
-            'pathname',
-            'process',
-            'processName',
-            'relativeCreated',
-            'thread',
-            'threadName'
+            'asctime', 'created', 'filename', 'funcName', 'levelname', 'levelno', 'lineno', 'module', 'msecs',
+            'message', 'name', 'pathname', 'process', 'processName', 'relativeCreated', 'thread', 'threadName'
         ]
 
         log_format = lambda x: ['%({0:s})'.format(i) for i in x]
@@ -88,8 +73,7 @@ class TestJsonLogger(unittest.TestCase):
         fr = jsonlogger.JsonFormatter()
         self.logHandler.setFormatter(fr)
 
-        msg = {"text": "testing logging", "num": 1, 5: "9",
-               "nested": {"more": "data"}}
+        msg = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
         self.tune_logger.info(msg)
         logJson = json.loads(self.buffer.getvalue())
         self.assertEqual(logJson.get("text"), msg["text"])
@@ -102,8 +86,7 @@ class TestJsonLogger(unittest.TestCase):
         fr = jsonlogger.JsonFormatter()
         self.logHandler.setFormatter(fr)
 
-        extra = {"text": "testing logging", "num": 1, 5: "9",
-                 "nested": {"more": "data"}}
+        extra = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
         self.tune_logger.info("hello", extra=extra)
         logJson = json.loads(self.buffer.getvalue())
         self.assertEqual(logJson.get("text"), extra["text"])
@@ -116,26 +99,27 @@ class TestJsonLogger(unittest.TestCase):
         fr = jsonlogger.JsonFormatter()
         self.logHandler.setFormatter(fr)
 
-        msg = {"adate": datetime.datetime(1999, 12, 31, 23, 59),
-               "otherdate": datetime.date(1789, 7, 14),
-               "otherdatetime": datetime.datetime(1789, 7, 14, 23, 59),
-               "otherdatetimeagain": datetime.datetime(1900, 1, 1)}
+        msg = {
+            "adate": datetime.datetime(1999, 12, 31, 23, 59),
+            "otherdate": datetime.date(1789, 7, 14),
+            "otherdatetime": datetime.datetime(1789, 7, 14, 23, 59),
+            "otherdatetimeagain": datetime.datetime(1900, 1, 1)
+        }
         self.tune_logger.info(msg)
         logJson = json.loads(self.buffer.getvalue())
         self.assertEqual(logJson.get("adate"), "1999-12-31T23:59")
         self.assertEqual(logJson.get("otherdate"), "1789-07-14")
         self.assertEqual(logJson.get("otherdatetime"), "1789-07-14T23:59:00")
-        self.assertEqual(logJson.get("otherdatetimeagain"),
-                         "1900-01-01T00:00")
+        self.assertEqual(logJson.get("otherdatetimeagain"), "1900-01-01T00:00")
 
     def testJsonCustomDefault(self):
         def custom(o):
             return "very custom"
+
         fr = jsonlogger.JsonFormatter(json_default=custom)
         self.logHandler.setFormatter(fr)
 
-        msg = {"adate": datetime.datetime(1999, 12, 31, 23, 59),
-               "normal": "value"}
+        msg = {"adate": datetime.datetime(1999, 12, 31, 23, 59), "normal": "value"}
         self.tune_logger.info(msg)
         logJson = json.loads(self.buffer.getvalue())
         self.assertEqual(logJson.get("adate"), "very custom")
@@ -143,7 +127,6 @@ class TestJsonLogger(unittest.TestCase):
 
     def testJsonCustomLogicAddsField(self):
         class CustomJsonFormatter(jsonlogger.JsonFormatter):
-
             def process_log_record(self, log_record):
                 log_record["custom"] = "value"
                 return super(CustomJsonFormatter, self).process_log_record(log_record)
@@ -170,11 +153,11 @@ class TestJsonLogger(unittest.TestCase):
         logJson = json.loads(self.buffer.getvalue())
         self.assertEqual(logJson.get("exc_info"), expected_value)
 
+
 if __name__ == '__main__':
     if len(sys.argv[1:]) > 0:
         if sys.argv[1] == 'xml':
-            testSuite = unittest.TestLoader().loadTestsFromTestCase(
-                testJsonLogger)
+            testSuite = unittest.TestLoader().loadTestsFromTestCase(testJsonLogger)
             xmlrunner.XMLTestRunner(output='reports').run(testSuite)
     else:
         unittest.main()
