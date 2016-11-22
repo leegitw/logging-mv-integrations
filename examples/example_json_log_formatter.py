@@ -26,9 +26,7 @@ except ImportError:
 from pythonjsonlogger import jsonlogger
 import json_log_formatter
 
-from logging_mv_integrations.errors import (
-    print_traceback
-)
+from logging_mv_integrations.errors import (print_traceback)
 
 
 class ExampleJsonLogger(object):
@@ -38,9 +36,7 @@ class ExampleJsonLogger(object):
 
     # Initialize Job
     #
-    def __init__(
-        self
-    ):
+    def __init__(self):
         pass
 
     def runJsonFormatter(self):
@@ -56,34 +52,17 @@ class ExampleJsonLogger(object):
 
         logger.setLevel(logging.DEBUG)
 
-        msg = {"text": "testing logging", "num": 1, 5: "9",
-               "nested": {"more": "data"}}
+        msg = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info(msg)
 
-        extra = {"text": "testing logging", "num": 1, 5: "9",
-                 "nested": {"more": "data"}}
+        extra = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info("hello", extra=extra)
 
         SUPPORTED_KEYS = [
-            'asctime',
-            'created',
-            'filename',
-            'funcName',
-            'levelname',
-            'levelno',
-            'lineno',
-            'module',
-            'msecs',
-            'message',
-            'name',
-            'pathname',
-            'process',
-            'processName',
-            'relativeCreated',
-            'thread',
-            'threadName'
+            'asctime', 'created', 'filename', 'funcName', 'levelname', 'levelno', 'lineno', 'module', 'msecs',
+            'message', 'name', 'pathname', 'process', 'processName', 'relativeCreated', 'thread', 'threadName'
         ]
 
         log_format = lambda x: ['%({0:s})'.format(i) for i in x]
@@ -95,13 +74,11 @@ class ExampleJsonLogger(object):
         msg = "A testing logging format"
         logger.info(msg)
 
-        msg = {"text": "B testing logging", "num": 1, 5: "9",
-               "nested": {"more": "data"}}
+        msg = {"text": "B testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info(msg)
 
-        extra = {"text": "C testing logging", "num": 1, 5: "9",
-                 "nested": {"more": "data"}}
+        extra = {"text": "C testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info("hello", extra=extra)
 
@@ -118,19 +95,15 @@ class ExampleJsonLogger(object):
 
         logger.setLevel(logging.DEBUG)
 
-        msg = {"text": "testing logging", "num": 1, 5: "9",
-               "nested": {"more": "data"}}
+        msg = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info(msg=msg)
 
-        extra = {"text": "testing logging", "num": 1, 5: "9",
-                 "nested": {"more": "data"}}
+        extra = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info("hello", extra=extra)
 
-        FORMAT_KEYS = {
-
-        }
+        FORMAT_KEYS = {}
 
         SUPPORTED_KEYS = {
             'args',
@@ -166,13 +139,11 @@ class ExampleJsonLogger(object):
         msg = "testing logging format"
         logger.info(msg=msg)
 
-        msg = {"text": "testing logging", "num": 1, 5: "9",
-               "nested": {"more": "data"}}
+        msg = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info(msg=msg)
 
-        extra = {"text": "testing logging", "num": 1, 5: "9",
-                 "nested": {"more": "data"}}
+        extra = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info("hello", extra=extra)
 
@@ -189,6 +160,7 @@ def main():
 
     except Exception as ex:
         print_traceback(ex)
+
 
 if __name__ == '__main__':
     sys.exit(main())
