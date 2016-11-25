@@ -24,6 +24,8 @@ VERSION := $(shell $(PYTHON3) setup.py version)
 WHEEL_ARCHIVE := dist/$(PACKAGE_PREFIX)-$(VERSION)-$(PACKAGE_SUFFIX)
 
 PACKAGE_FILES := $(shell find $(PACKAGE_PREFIX) examples ! -name '__init__.py' -type f -name "*.py")
+PACKAGE_ALL_FILES := $(shell find $(PACKAGE_PREFIX) examples -type f -name "*.py")
+
 TOOLS_REQ_FILE := requirements-tools.txt
 REQ_FILE      := requirements.txt
 SETUP_FILE    := setup.py
@@ -59,6 +61,12 @@ clean:
 		$(PACKAGE_PREFIX).egg-info/*
 	find ./* -maxdepth 0 -name "*.pyc" -type f -delete
 	find $(PACKAGE_PREFIX) -name "*.pyc" -type f -delete
+	@echo "======================================================"
+	@echo delete distributions: $(PACKAGE)
+	@echo "======================================================"
+	mkdir -p ./dist/
+	find ./dist/ -name $(PACKAGE_WILDCARD) -exec rm -vf {} \;
+	find ./dist/ -name $(PACKAGE_PREFIX_WILDCARD) -exec rm -vf {} \;
 
 uninstall-package: clean
 	@echo "======================================================"
@@ -160,37 +168,31 @@ pep8: tools-requirements
 	@echo "======================================================"
 	@echo pep8 $(PACKAGE)
 	@echo "======================================================"
-	@echo pep8: $(REQUESTS_MV_INTGS_FILES)
-	$(PYTHON3) -m pep8 --config .pep8 $(REQUESTS_MV_INTGS_FILES)
+	$(PYTHON3) -m pep8 --config .pep8 $(PACKAGE_FILES)
 
 pyflakes: tools-requirements
 	@echo "======================================================"
 	@echo pyflakes $(PACKAGE)
 	@echo "======================================================"
-	@echo pyflakes: $(PACKAGE_FILES)
-	$(PIP3) install --upgrade pyflakes
 	$(PYTHON3) -m pyflakes $(PACKAGE_FILES)
 
 pylint: tools-requirements
 	@echo "======================================================"
 	@echo pylint $(PACKAGE)
 	@echo "======================================================"
-	@echo pylint: $(PACKAGE_FILES)
-	$(PIP3) install --upgrade pylint
 	$(PYTHON3) -m pylint --rcfile .pylintrc $(PACKAGE_FILES) --disable=C0330,F0401,E0611,E0602,R0903,C0103,E1121,R0913,R0902,R0914,R0912,W1202,R0915,C0302 | more -30
 
 yapf: tools-requirements
 	@echo "======================================================"
 	@echo yapf $(PACKAGE)
 	@echo "======================================================"
-	@echo yapf: $(PACKAGE_FILES)
-	$(PYTHON3) -m yapf --style .style.yapf --in-place $(PACKAGE_FILES)
+	$(PYTHON3) -m yapf --style .style.yapf --in-place $(PACKAGE_ALL_FILES)
 
 lint: tools-requirements
 	@echo "======================================================"
 	@echo lint $(PACKAGE)
 	@echo "======================================================"
-	pylint --rcfile .pylintrc $(REQUESTS_MV_INTGS_FILES) | more
+	pylint --rcfile .pylintrc $(PACKAGE_FILES) | more
 
 flake8:
 	@echo "======================================================"
@@ -209,28 +211,3 @@ list-package:
 	@echo list-packages $(PACKAGE)
 	@echo "======================================================"
 	ls -al $(PYTHON3_SITE_PACKAGES)/$(PACKAGE_PREFIX)*
-
-tests: build
-	$(PYTHON3) ./tests/tune_reporting_tests.py $(api_key)
-
-tests-travis-ci:
-	flake8 --ignore=F401,E265,E129 tune
-	flake8 --ignore=E123,E126,E128,E265,E501 tests
-	$(PYTHON3) ./tests/tune_reporting_tests.py $(api_key)
-
-docs-sphinx-gen:
-	rm -fR ./docs/sphinx/tune_reporting/*
-	sphinx-apidoc -o ./docs/sphinx/tune_reporting/ ./tune_reporting
-
-docs-install: venv
-	. venv/bin/activate; pip install -r docs/sphinx/requirements.txt
-
-docs-sphinx: docs-install
-	rm -fR ./docs/sphinx/_build
-	cd docs/sphinx && make html
-	x-www-browser docs/sphinx/_build/html/index.html
-
-docs-doxygen:
-	rm -fR ./docs/doxygen/*
-	sudo doxygen docs/Doxyfile
-	x-www-browser docs/doxygen/html/index.html
