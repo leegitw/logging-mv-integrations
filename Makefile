@@ -211,3 +211,6 @@ list-package:
 	@echo list-packages $(PACKAGE)
 	@echo "======================================================"
 	ls -al $(PYTHON3_SITE_PACKAGES)/$(PACKAGE_PREFIX)*
+
+list:
+	cat Makefile | grep "^[a-z]" | awk '{print $$1}' | sed "s/://g" | sort
