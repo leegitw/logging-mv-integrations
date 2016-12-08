@@ -15,6 +15,7 @@ __pycache__/
 pycountries/__pycache__/
 pycountries/helpers/__pycache__/
 *.pyc
+*.zip
 
 # Code documentation
 docs/sphinx/_build/
