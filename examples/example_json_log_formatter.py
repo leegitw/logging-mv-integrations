@@ -42,7 +42,9 @@ class ExampleJsonLogger(object):
             'message', 'name', 'pathname', 'process', 'processName', 'relativeCreated', 'thread', 'threadName'
         ]
 
-        log_format = lambda x: ['%({0:s})'.format(i) for i in x]
+        def log_format(x):
+            return ['%({0:s})'.format(i) for i in x]
+
         custom_format = ' '.join(log_format(SUPPORTED_KEYS))
 
         formatter = jsonlogger.JsonFormatter(custom_format)
@@ -105,7 +107,9 @@ class ExampleJsonLogger(object):
             'threadName',
         }
 
-        log_format = lambda x: ['%({0:s})'.format(i) for i in x]
+        def log_format(x):
+            return ['%({0:s})'.format(i) for i in x]
+
         custom_format = ' '.join(log_format(SUPPORTED_KEYS))
 
         formatter = json_log_formatter.JSONFormatter(custom_format)

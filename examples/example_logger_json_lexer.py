@@ -17,7 +17,8 @@ def main():
     lno = 1
     debug_lexer = True
 
-    text = '{"asctime": "2016-09-17 16:16:14 -0700", "levelname": "INFO", "name": "abc_def_ghi", "version": "0.0.0.0", "message": "Upload Config", "download_path": "tmp/download.json", "timeout": 1200}'
+    text = '{"asctime": "2016-09-17 16:16:14 -0700", "levelname": "INFO", "name": "abc_def_ghi", ' \
+           '"version": "0.0.0.0", "message": "Upload Config", "download_path": "tmp/download.json", "timeout": 1200}'
     tokens = []
     states = []
 
