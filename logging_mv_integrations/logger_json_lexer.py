@@ -16,7 +16,6 @@ from pygments.token import (
     #  Literal,
     STANDARD_TYPES
 )
-from pprintpp import pprint
 
 STANDARD_TYPES.update({
     String.Double.Logger: 's2l',
@@ -71,7 +70,7 @@ class LoggerJsonLexer(pygments.lexer.RegexLexer):
     attr_message = r'"message"'
 
     tokens = {
-        'whitespace': [(r'\s+', Text),],
+        'whitespace': [(r'\s+', Text)],
 
         # represents a simple terminal value
         'simplevalue': [
@@ -141,5 +140,5 @@ class LoggerJsonLexer(pygments.lexer.RegexLexer):
         ],
 
         # the root of a json document would be a value
-        'root': [pygments.lexer.include('json_value'),],
+        'root': [pygments.lexer.include('json_value')],
     }

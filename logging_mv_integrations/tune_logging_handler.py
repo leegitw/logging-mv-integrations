@@ -21,7 +21,8 @@ class TuneLoggingHandler(metaclass=Singleton):
 
     @property
     def log_formatter(self):
-        # print('TuneLoggingHandler', 'log_formatter.getter', type(self.__log_formatter).__name__, id(self.__log_formatter))
+        # print('TuneLoggingHandler', 'log_formatter.getter', type(self.__log_formatter).__name__,
+        #       id(self.__log_formatter))
         return self.__log_formatter
 
     @log_formatter.setter

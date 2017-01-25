@@ -9,7 +9,6 @@ TUNE Multiverse Integration Base
 import datetime as dt
 import tzlocal
 import coloredlogs
-from pprintpp import pprint
 
 
 class LoggingStandardFormatter(coloredlogs.ColoredFormatter):

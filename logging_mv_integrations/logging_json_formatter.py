@@ -6,7 +6,6 @@ import datetime as dt
 import json
 import sys
 from collections import OrderedDict
-from pprintpp import pprint
 
 import pygments.formatters
 import pygments.lexer

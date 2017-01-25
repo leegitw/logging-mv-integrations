@@ -1,36 +1,13 @@
 #!/usr/bin/env python3
 
 import logging
-import json
 import sys
-import traceback
-
-import sys
-import gc
-
-import logging
-import json
-import sys
-import traceback
-
-try:
-    import xmlrunner
-except ImportError:
-    pass
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-
 from pythonjsonlogger import jsonlogger
 import json_log_formatter
-
 from logging_mv_integrations.errors import (print_traceback)
 
 
 class ExampleJsonLogger(object):
-
     _INTEGRATION_NAME = "Example: JsonLogger"
     LOGGER_NAME = 'example-json-logger'
 
@@ -65,7 +42,9 @@ class ExampleJsonLogger(object):
             'message', 'name', 'pathname', 'process', 'processName', 'relativeCreated', 'thread', 'threadName'
         ]
 
-        log_format = lambda x: ['%({0:s})'.format(i) for i in x]
+        def log_format(x):
+            return ['%({0:s})'.format(i) for i in x]
+
         custom_format = ' '.join(log_format(SUPPORTED_KEYS))
 
         formatter = jsonlogger.JsonFormatter(custom_format)
@@ -103,8 +82,6 @@ class ExampleJsonLogger(object):
 
         logger.info("hello", extra=extra)
 
-        FORMAT_KEYS = {}
-
         SUPPORTED_KEYS = {
             'args',
             'asctime',
@@ -130,7 +107,9 @@ class ExampleJsonLogger(object):
             'threadName',
         }
 
-        log_format = lambda x: ['%({0:s})'.format(i) for i in x]
+        def log_format(x):
+            return ['%({0:s})'.format(i) for i in x]
+
         custom_format = ' '.join(log_format(SUPPORTED_KEYS))
 
         formatter = json_log_formatter.JSONFormatter(custom_format)
