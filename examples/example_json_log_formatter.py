@@ -8,7 +8,6 @@ from logging_mv_integrations.errors import (print_traceback)
 
 
 class ExampleJsonLogger(object):
-
     _INTEGRATION_NAME = "Example: JsonLogger"
     LOGGER_NAME = 'example-json-logger'
 
