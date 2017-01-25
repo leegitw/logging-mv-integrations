@@ -1,13 +1,7 @@
 import sys
-from pprintpp import pprint
-from pygments.lexer import RegexLexer, ExtendedRegexLexer, LexerContext, \
-    ProfilingRegexLexer, ProfilingRegexLexerMeta
-from pygments.lexers import get_lexer_by_name, find_lexer_class, \
-    find_lexer_class_for_filename
-from pygments.token import Error, Text, _TokenType
-from pygments.cmdline import _parse_options
-
+from pygments.token import Error
 from logging_mv_integrations import (LoggerJsonLexer)
+from pprintpp import pprint
 
 num = 10
 showall = False
@@ -16,8 +10,6 @@ lexer = None
 options = {}
 profile = False
 profsort = 4
-
-from pprintpp import pprint
 
 
 def main():

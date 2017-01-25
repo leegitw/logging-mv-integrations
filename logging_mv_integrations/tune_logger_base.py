@@ -17,7 +17,6 @@ def get_logger(
     logger_level=logging.NOTSET,
     logger=None
 ):
-    _logger = logger
 
     if not logger_format:
         raise ValueError("Undefined 'logger_format'")

@@ -16,7 +16,6 @@ from pygments.token import (
     #  Literal,
     STANDARD_TYPES
 )
-from pprintpp import pprint
 
 STANDARD_TYPES.update({
     String.Double.Logger: 's2l',

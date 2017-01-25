@@ -1,31 +1,9 @@
 #!/usr/bin/env python3
 
 import logging
-import json
 import sys
-import traceback
-
-import sys
-import gc
-
-import logging
-import json
-import sys
-import traceback
-
-try:
-    import xmlrunner
-except ImportError:
-    pass
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-
 from pythonjsonlogger import jsonlogger
 import json_log_formatter
-
 from logging_mv_integrations.errors import (print_traceback)
 
 
@@ -102,8 +80,6 @@ class ExampleJsonLogger(object):
         extra = {"text": "testing logging", "num": 1, 5: "9", "nested": {"more": "data"}}
 
         logger.info("hello", extra=extra)
-
-        FORMAT_KEYS = {}
 
         SUPPORTED_KEYS = {
             'args',

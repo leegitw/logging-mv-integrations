@@ -3,6 +3,8 @@ import logging
 import json
 import sys
 import traceback
+from pythonjsonlogger import jsonlogger
+import datetime
 
 try:
     import xmlrunner
@@ -15,8 +17,6 @@ except ImportError:
     from io import StringIO
 
 sys.path.append('src/python-json-logger')
-from pythonjsonlogger import jsonlogger
-import datetime
 
 
 class TestJsonLogger(unittest.TestCase):
@@ -157,7 +157,7 @@ class TestJsonLogger(unittest.TestCase):
 if __name__ == '__main__':
     if len(sys.argv[1:]) > 0:
         if sys.argv[1] == 'xml':
-            testSuite = unittest.TestLoader().loadTestsFromTestCase(testJsonLogger)
+            testSuite = unittest.TestLoader().loadTestsFromTestCase(TestJsonLogger)
             xmlrunner.XMLTestRunner(output='reports').run(testSuite)
     else:
         unittest.main()
