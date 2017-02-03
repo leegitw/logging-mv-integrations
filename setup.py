@@ -12,6 +12,8 @@ from __future__ import with_statement
 
 import sys
 import re
+import codecs
+
 from setuptools import setup
 
 REQUIREMENTS = [
@@ -26,27 +28,6 @@ PACKAGES = [
     'logging_mv_integrations.errors'
 ]
 
-CLASSIFIERS = [
-    # How mature is this project? Common values are
-    #   3 - Alpha
-    #   4 - Beta
-    #   5 - Production/Stable
-    'Development Status :: 5 - Production/Stable',
-    'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
-    'Operating System :: OS Independent',
-    'Natural Language :: English',
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 2.7',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.0',
-    'Programming Language :: Python :: 3.1',
-    'Programming Language :: Python :: 3.2',
-    'Programming Language :: Python :: 3.3',
-    'Programming Language :: Python :: 3.4',
-    'Topic :: Software Development :: Libraries :: Python Modules'
-]
-
 with open('logging_mv_integrations/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', fd.read(), re.MULTILINE).group(1)
 
@@ -57,24 +38,45 @@ if len(sys.argv) < 2 or sys.argv[1] == 'version':
     print(version)
     sys.exit()
 
+CLASSIFIERS = [
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'Natural Language :: English',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Natural Language :: English',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
+    'Topic :: Software Development :: Libraries :: Python Modules'
+]
+
+with codecs.open('README.rst', 'r', 'utf-8') as f:
+    readme = f.read()
+with codecs.open('HISTORY.rst', 'r', 'utf-8') as f:
+    history = f.read()
+
 setup(
     name='logging-mv-integrations',
     version=version,
     description='Python logging package extensions for TUNE mv-integrations.',
+    long_description=readme + '\n\n' + history,
     author='TUNE Inc., TuneLab',
     author_email='jefft@tune.com',
     url='https://github.com/TuneLab/logging-mv-integrations',
+    download_url='https://github.com/TuneLab/logging-mv-integrations/archive/v{0}.tar.gz'.format(version),
+    keywords=["tune", "reporting", "tmc", "api"],
+    license='MIT License',
+    zip_safe=False,
     install_requires=REQUIREMENTS,
     packages=PACKAGES,
-    package_dir={'logging-mv-integrations': 'logging-mv-integrations'},
-    include_package_data=True,
-    license='Apache 2.0',
-    zip_safe=False,
-    classifiers=CLASSIFIERS,
-    long_description="""\
-    Python logging package extensions for TUNE mv-integrations.
-    -----------------------------------------------------------
-
-    Python logging handlers, formatters, and styles used by TUNE mv-integrations.
-    """
+    package_data={'': ['LICENSE']},
+    package_dir={'tune_reporting': 'tune_reporting'},
+    classifiers=CLASSIFIERS
 )
