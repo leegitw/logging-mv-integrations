@@ -10,7 +10,7 @@ import json
 import logging
 from string import Template
 
-from logging_mv_integrations.support import (safe_str, safe_int, safe_float)
+from safe_cast import (safe_str, safe_int, safe_float)
 
 TUNE_STANDARD_FORMAT_SUPPORTED_KEYS = {
     # 'pathname': {'type': str, 'order': 0, 'label': True},
