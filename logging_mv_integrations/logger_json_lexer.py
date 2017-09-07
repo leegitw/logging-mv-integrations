@@ -7,13 +7,11 @@ import pygments.lexer
 import re
 from pygments.token import (
     Text,
-    #  Comment,
     Keyword,
     Name,
     String,
     Number,
     Punctuation,
-    #  Literal,
     STANDARD_TYPES
 )
 
@@ -76,9 +74,6 @@ class LoggerJsonLexer(pygments.lexer.RegexLexer):
         'simplevalue': [
             (r'(true|false|null)', Keyword.Constant),
 
-            # (('%(int_part)s(%(frac_part)s%(exp_part)s|'
-            #   '%(exp_part)s|%(frac_part)s)') % vars(),
-            #  Number.Float),
             (int_part, Number.Integer),
             (value_asctime, String.Double.Logger.Asctime),
             (value_level_info, String.Double.Logger.Level.Info),
