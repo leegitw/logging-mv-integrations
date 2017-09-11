@@ -6,7 +6,9 @@ from .logging_json_formatter import LoggingJsonFormatter
 class CustomAdapter(logging.LoggerAdapter):
 
     def process(self, msg, kwargs):
-        if 'extra' in kwargs and kwargs['extra'] is not None:
+
+        extra = kwargs.get('extra')
+        if extra:
             kwargs['extra'].update({'version': self.extra['version']})
         else:
             kwargs['extra'] = {'version': self.extra['version']}
