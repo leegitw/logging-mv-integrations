@@ -15,7 +15,29 @@ class CustomAdapter(logging.LoggerAdapter):
         return msg, kwargs
 
 
-def get_logger(logger_name, logger_version=None, logger_format=None, logger_level=None):
+def get_logging_level(str_logging_level):
+    """Convert from string to logging level.
+
+    Args:
+        str_logging_level:
+
+    Returns:
+
+    """
+    assert str_logging_level
+    str_logging_level = str_logging_level.upper()
+
+    return {
+        'NOTSET': logging.NOTSET,
+        'DEBUG': logging.DEBUG,
+        'INFO': logging.INFO,
+        'WARNING': logging.WARNING,
+        'ERROR': logging.ERROR,
+        'CRITICAL': logging.CRITICAL
+    }.get(str_logging_level, logging.INFO)
+
+
+def get_logger(logger_name, logger_version=None, logger_level=20, logger_format=None):
 
     formatter = LoggingJsonFormatter(
         logger_name,
@@ -27,7 +49,7 @@ def get_logger(logger_name, logger_version=None, logger_format=None, logger_leve
     handler.setFormatter(formatter)
 
     logger = logging.getLogger(logger_name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logger_level)
     logger.addHandler(handler)
 
     adapter = CustomAdapter(logger, {'version': logger_version})
