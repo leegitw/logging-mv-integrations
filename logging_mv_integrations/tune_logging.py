@@ -16,14 +16,7 @@ class CustomAdapter(logging.LoggerAdapter):
 
 
 def get_logging_level(str_logging_level):
-    """Convert from string to logging level.
 
-    Args:
-        str_logging_level:
-
-    Returns:
-
-    """
     assert str_logging_level
     str_logging_level = str_logging_level.upper()
 
@@ -37,7 +30,7 @@ def get_logging_level(str_logging_level):
     }.get(str_logging_level, logging.INFO)
 
 
-def get_logger(logger_name, logger_version=None, logger_level=20, logger_format=None):
+def get_logger(logger_name, logger_version=None, logger_level=logging.INFO, logger_format=None):
 
     formatter = LoggingJsonFormatter(
         logger_name,
