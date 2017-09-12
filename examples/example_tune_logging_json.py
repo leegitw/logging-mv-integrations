@@ -2,7 +2,7 @@ import logging
 from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
 
 tune_logger = get_logger(
-    module_name=__name__, logger_version=__version__, logger_format=TuneLoggingFormat.JSON, logger_level=logging.DEBUG
+    logger_name=__name__, logger_version=__version__, logger_format=TuneLoggingFormat.JSON, logger_level=logging.DEBUG
 )
 
 tune_logger.info("logging: info", extra={'test': __name__})

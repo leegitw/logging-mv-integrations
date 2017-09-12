@@ -109,10 +109,10 @@ class TestJsonLogger(unittest.TestCase):
         }
         self.tune_logger.info(msg)
         logJson = json.loads(self.buffer.getvalue())
-        self.assertEqual(logJson.get("adate"), "1999-12-31T23:59")
+        self.assertEqual(logJson.get("adate"), "1999-12-31T23:59:00")
         self.assertEqual(logJson.get("otherdate"), "1789-07-14")
         self.assertEqual(logJson.get("otherdatetime"), "1789-07-14T23:59:00")
-        self.assertEqual(logJson.get("otherdatetimeagain"), "1900-01-01T00:00")
+        self.assertEqual(logJson.get("otherdatetimeagain"), "1900-01-01T00:00:00")
 
     def testJsonCustomDefault(self):
         def custom(o):

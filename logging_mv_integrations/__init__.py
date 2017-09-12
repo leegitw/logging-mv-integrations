@@ -4,8 +4,8 @@
 #  @namespace logging_mv_integrations
 
 __title__ = 'logging-mv-integrations'
-__version__ = '0.1.2'
-__build__ = 0x000102
+__version__ = '0.1.3'
+__build__ = 0x000103
 __version_info__ = tuple(__version__.split('.'))
 
 __author__ = 'jefft@tune.com'
@@ -16,7 +16,4 @@ __python_required_version__ = (3, 0)
 from .logger_json_lexer import (LoggerJsonLexer)
 from .logging_format import (TuneLoggingFormat)
 from .logging_json_formatter import (LoggingJsonFormatter)
-from .logging_standard_formatter import (LoggingStandardFormatter)
-from .tune_logger_base import (get_logger, get_logger_name)
-from .tune_logging import (TuneLogging)
-from .tune_logging_handler import (TuneLoggingHandler, get_tune_logger_with_handler)
+from .tune_logging import (get_logger, get_logging_level)

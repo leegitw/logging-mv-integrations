@@ -2,7 +2,7 @@ import logging
 from logging_mv_integrations import (get_logger, TuneLoggingFormat, __version__)
 
 tune_logger = get_logger(
-    module_name=__name__,
+    logger_name=__name__,
     logger_version=__version__,
     logger_format=TuneLoggingFormat.STANDARD,
     logger_level=logging.DEBUG
