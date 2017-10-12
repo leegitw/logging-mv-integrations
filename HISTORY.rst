@@ -3,6 +3,10 @@
 Release History
 ===============
 
+0.1.4 (2017-10-09)
+------------------
+- Multiple handlers fix
+
 0.1.3 (2017-09-12)
 ------------------
 - Use python standard logging instead of tune_logging and remove all unneeded files

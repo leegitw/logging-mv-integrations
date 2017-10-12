@@ -43,7 +43,8 @@ def get_logger(logger_name, logger_version=None, logger_level=logging.INFO, logg
 
     logger = logging.getLogger(logger_name)
     logger.setLevel(logger_level)
-    logger.addHandler(handler)
+    if not len(logger.handlers):
+        logger.addHandler(handler)
 
     adapter = CustomAdapter(logger, {'version': logger_version})
 
