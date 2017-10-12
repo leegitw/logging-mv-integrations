@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#  @copyright 2017 TUNE, Inc. (http://www.tune.com)
+#  @namespace logging_mv_integrations
+
 import sys
 from pygments.token import Error
 from logging_mv_integrations import (LoggerJsonLexer)
