@@ -47,51 +47,65 @@ Overview
 .. end-badges
 
 logging-mv-integrations
-========================
+=======================
 
 ``logging-mv-integrations`` is a Python logging library for TUNE Multiverse Integrations.
+
+.. image:: ./images/logging_mv_integrations.png
+   :scale: 50 %
+   :alt: UML logging-mv-integrations
 
 Usage
 -----
 
 .. code-block:: python
     import logging
+    from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
 
-    logger = logging.getLogger()
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.setLevel(logging.DEBUG)
+    tune_logger = get_logger(
+        logger_name=__name__,
+        logger_version=__version__,
+        logger_format=TuneLoggingFormat.JSON,
+        logger_level=logging.DEBUG
+    )
 
-    logger.debug('often makes a very good meal of %s', 'visiting tourists')
+    tune_logger.info("logging: info", extra={'test': __name__})
+    tune_logger.debug("logging: debug", extra={'test': __name__})
+    tune_logger.warning("logging: warning", extra={'test': __name__})
+    tune_logger.error("logging: error", extra={'test': __name__})
+    tune_logger.critical("logging: critical", extra={'test': __name__})
+    tune_logger.exception("logging: exception", extra={'test': __name__})
 
-    logger.info("Hello World")
+Example: Logging JSON Format
+----------------------------
 
-    logging.debug('This message should go to the log file')
-    logging.info('So should this')
-    logging.warning('And this, too')
+.. code-block:: python
+    import logging
+    from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
 
-Example
--------
+    tune_logger = get_logger(
+        logger_name=__name__,
+        logger_version=__version__,
+        logger_format=TuneLoggingFormat.JSON,
+        logger_level=logging.DEBUG
+    )
+
+    tune_logger.info("logging: info", extra={'test': __name__})
+    tune_logger.debug("logging: debug", extra={'test': __name__})
+    tune_logger.warning("logging: warning", extra={'test': __name__})
+    tune_logger.error("logging: error", extra={'test': __name__})
+    tune_logger.critical("logging: critical", extra={'test': __name__})
+    tune_logger.exception("logging: exception", extra={'test': __name__})
 
 .. code-block:: bash
-    python3 examples/example_logger_json.py
+    python3 examples/example_tune_logging_json.py
 
-    2017-10-12 15:13:44,235 root         DEBUG    often makes a very good meal of visiting tourists
-    2017-10-12 15:13:44,236 root         INFO     Hello World
-    2017-10-12 15:13:44,236 root         DEBUG    This message should go to the log file
-    2017-10-12 15:13:44,236 root         INFO     So should this
-    2017-10-12 15:13:44,236 root         WARNING  And this, too
-    2017-10-12 15:13:44,237 root         INFO     Hello World
-
-    {"message": "Hello World"}
-    {"asctime": "2017-10-12 15:13:44,238", "levelname": "DEBUG", "process": 6029, "thread": 140737014789056, "module": "example_logger_json", "message": "foo"}
-    2017-10-12 15:13:44,238 my_logger    DEBUG    foo
-    {"message": "foo"}
-    {"asctime": "2017-10-12 15:13:44,238", "levelname": "DEBUG", "process": 6029, "thread": 140737014789056, "module": "example_logger_json", "message": "bar"}
-    2017-10-12 15:13:44,238 my_logger    DEBUG    bar
-    {"message": "bar"}
+    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "INFO", "name": "__main__", "version": "0.1.3", "message": "logging: info", "test": "__main__"}
+    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "DEBUG", "name": "__main__", "version": "0.1.3", "message": "logging: debug", "test": "__main__"}
+    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "WARNING", "name": "__main__", "version": "0.1.3", "message": "logging: warning", "test": "__main__"}
+    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.3", "message": "logging: error", "test": "__main__"}
+    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "CRITICAL", "name": "__main__", "version": "0.1.3", "message": "logging: critical", "test": "__main__"}
+    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.3", "message": "logging: exception", "exc_info": "NoneType: None", "test": "__main__"}
 
 Dependencies
 ============
@@ -102,23 +116,25 @@ several custom modules that are held within .. _PyPI: https://pypi.python.org/py
 .. code-block:: bash
     python3 -m pip install --upgrade -r requirements.txt
 
-TuneLab Generic Custom Packages
--------------------------------
 
-These other packages provide support functionality but are not core
+TUNE Multiverse Custom Support Packages
+---------------------------------------
+
+These packages provide support functionality but are not core
 to Multiverse. Thereby, test and documentation could be shared
 amongst the team.
 
-* .. _safe-cast: https://pypi.python.org/pypi/safe-cast
+- .. _safe-cast: https://pypi.python.org/pypi/safe-cast
 
-Required Support Packages
--------------------------
 
-* .. _coloredlogs: https://pypi.python.org/pypi/coloredlogs
-* .. _pprintpp: https://pypi.python.org/pypi/pprintpp
-* .. _python-json-logger: https://pypi.python.org/pypi/python-json-logger
-* .. _Pygments: https://pypi.python.org/pypi/Pygments
-* .. _wheel: https://pypi.python.org/pypi/wheel
+Support Packages
+----------------
+
+- .. _coloredlogs: https://pypi.python.org/pypi/coloredlogs
+- .. _pprintpp: https://pypi.python.org/pypi/pprintpp
+- .. _python-json-logger: https://pypi.python.org/pypi/python-json-logger
+- .. _Pygments: https://pypi.python.org/pypi/Pygments
+- .. _wheel: https://pypi.python.org/pypi/wheel
 
 
 Acknowledgements
