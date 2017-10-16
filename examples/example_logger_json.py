@@ -1,32 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#  @copyright 2016 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2017 TUNE, Inc. (http://www.tune.com)
+#  @namespace logging_mv_integrations
 
 import logging
-from pythonjsonlogger import jsonlogger
 from logging.config import dictConfig
-
-logger = logging.getLogger()
-handler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.setLevel(logging.DEBUG)
-
-logger.debug('often makes a very good meal of %s', 'visiting tourists')
-
-logger.info("Hello World")
-
-logging.debug('This message should go to the log file')
-logging.info('So should this')
-logging.warning('And this, too')
-
-logHandler = logging.StreamHandler()
-formatter = jsonlogger.JsonFormatter()
-logHandler.setFormatter(formatter)
-logger.addHandler(logHandler)
-
-logger.info("Hello World")
 
 log_config = {
     'version': 1,
@@ -44,7 +22,7 @@ log_config = {
         },
     },
     'loggers': {
-        'my_logger': {
+        'example_logger': {
             'handlers': ['stream'],
             'level': 'DEBUG',
             'propagate': True,
@@ -52,8 +30,16 @@ log_config = {
     }
 }
 
+# Configure logging
 dictConfig(log_config)
-logger = logging.getLogger('my_logger')
+logger = logging.getLogger('example_logger')
 
-logger.debug('foo')
-logger.debug('bar')
+logger.debug('often makes a very good meal of %s', 'visiting tourists')
+
+logger.info("Hello World")
+
+logging.debug('This message should go to the log file')
+logging.info('So should this')
+logging.warning('And this, too')
+
+logger.info("Hello World")

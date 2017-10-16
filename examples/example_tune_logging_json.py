@@ -1,8 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#  @copyright 2017 TUNE, Inc. (http://www.tune.com)
+#  @namespace logging_mv_integrations
+
 import logging
 from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
 
 tune_logger = get_logger(
-    logger_name=__name__, logger_version=__version__, logger_format=TuneLoggingFormat.JSON, logger_level=logging.DEBUG
+    logger_name=__name__,
+    logger_version=__version__,
+    logger_format=TuneLoggingFormat.JSON,
+    logger_level=logging.DEBUG
 )
 
 tune_logger.info("logging: info", extra={'test': __name__})
