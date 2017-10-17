@@ -3,6 +3,10 @@
 Release History
 ===============
 
+0.1.5 (2017-10-17)
+------------------
+- Fix standard format
+
 0.1.4 (2017-10-09)
 ------------------
 - Multiple handlers fix

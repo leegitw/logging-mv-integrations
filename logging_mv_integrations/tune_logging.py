@@ -6,6 +6,7 @@
 import logging
 import logging.config
 from .logging_json_formatter import LoggingJsonFormatter
+from .logging_format import TuneLoggingFormat
 
 
 class CustomAdapter(logging.LoggerAdapter):
@@ -37,11 +38,14 @@ def get_logging_level(str_logging_level):
 
 def get_logger(logger_name, logger_version=None, logger_level=logging.INFO, logger_format=None):
 
-    formatter = LoggingJsonFormatter(
-        logger_name,
-        logger_version,
-        fmt='%(asctime)s %(levelname)s %(name)s %(version)s %(message)s'
-    )
+    if logger_format == TuneLoggingFormat.STANDARD:
+        formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+    else:
+        formatter = LoggingJsonFormatter(
+            logger_name,
+            logger_version,
+            fmt='%(asctime)s %(levelname)s %(name)s %(version)s %(message)s'
+        )
 
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
