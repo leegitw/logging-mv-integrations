@@ -111,7 +111,7 @@ Dependencies
 ============
 
 ``logging-mv-integrations`` module is built upon Python 3 and is build upon
-several custom modules that are held within .. _PyPI: https://pypi.python.org/pypi
+several custom modules that are held within PyPI: https://pypi.python.org/pypi
 
 .. code-block:: bash
     python3 -m pip install --upgrade -r requirements.txt
@@ -124,23 +124,18 @@ These packages provide support functionality but are not core
 to Multiverse. Thereby, test and documentation could be shared
 amongst the team.
 
-- .. _safe-cast: https://pypi.python.org/pypi/safe-cast
+- safe-cast: https://pypi.python.org/pypi/safe-cast
 
 
 Support Packages
 ----------------
 
-- .. _coloredlogs: https://pypi.python.org/pypi/coloredlogs
-- .. _pprintpp: https://pypi.python.org/pypi/pprintpp
-- .. _python-json-logger: https://pypi.python.org/pypi/python-json-logger
-- .. _Pygments: https://pypi.python.org/pypi/Pygments
-- .. _wheel: https://pypi.python.org/pypi/wheel
+- coloredlogs: https://pypi.python.org/pypi/coloredlogs
+- pprintpp: https://pypi.python.org/pypi/pprintpp
+- python-json-logger: https://pypi.python.org/pypi/python-json-logger
+- Pygments: https://pypi.python.org/pypi/Pygments
+- wheel: https://pypi.python.org/pypi/wheel
 
-
-Acknowledgements
-================
-
-.. include:: AUTHORS.rst
 
 Reporting Issues
 ================
@@ -150,7 +145,3 @@ We definitely want to hear your feedback.
 Report issues using the `Github Issue Tracker`:
 https://github.com/TuneLab/tune-mv-integration-python/issues
 
-HISTORY
-=======
-
-.. include:: HISTORY.rst
