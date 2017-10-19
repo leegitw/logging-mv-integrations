@@ -13,12 +13,11 @@ class LoggingOutput(object):
     STDOUT = "stdout"
     STDOUT_COLOR = "color"
     FILE = "file"
-    TEST = "test"
 
     @staticmethod
     def validate(value):
         if not value or value is None:
             return False
-        if value in [LoggingOutput.STDOUT, LoggingOutput.STDOUT_COLOR, LoggingOutput.FILE, LoggingOutput.TEST]:
+        if value in [LoggingOutput.STDOUT, LoggingOutput.STDOUT_COLOR, LoggingOutput.FILE]:
             return True
         return False
