@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#  @copyright 2016 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2017 TUNE, Inc. (http://www.tune.com)
 #  @namespace logging_mv_integrations
 
 import datetime as dt
@@ -15,6 +15,7 @@ import tzlocal
 from pygments import highlight
 from pythonjsonlogger import jsonlogger
 from .logger_json_lexer import LoggerJsonLexer
+from .logging_output import LoggingOutput
 
 COLOR_SCHEME = {
     pygments.token.Token: ('darkgray', 'darkgray'),
@@ -60,8 +61,20 @@ COLOR_SCHEME = {
 
 
 class LoggingJsonFormatter(jsonlogger.JsonFormatter):
+    """
+    A custom formatter to format logging records as json strings.
+    extra values will be formatted as str() if nor supported by
+    json default encoder
+    """
 
     __logger_versions = {}
+
+    def __init__(self, logger_name, logger_version, logger_output, *args, **kwargs):
+        _logger_name = logger_name.split('.')[0]
+        self.logger_output = logger_output
+        if __name__ not in self.logger_versions:
+            self.add_logger_version(_logger_name, logger_version)
+        super(LoggingJsonFormatter, self).__init__(*args, **kwargs)
 
     @property
     def logger_versions(self):
@@ -73,6 +86,9 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
 
     def add_logger_version(self, logger_name, logger_version):
         self.__logger_versions.update({logger_name: logger_version})
+
+    def get_logger_output(self):
+        return self.logger_output
 
     def get_logger_version(self, logger_name):
         _logger_version = None
@@ -89,12 +105,6 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
 
         return _logger_version
 
-    def __init__(self, logger_name, logger_version, *args, **kwargs):
-        _logger_name = logger_name.split('.')[0]
-        if __name__ not in self.logger_versions:
-            self.add_logger_version(_logger_name, logger_version)
-        super(LoggingJsonFormatter, self).__init__(*args, **kwargs)
-
     def converter(self, timestamp):
         tz = tzlocal.get_localzone()
         return dt.datetime.fromtimestamp(timestamp, tz)
@@ -106,14 +116,13 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
         else:
             return ct.strftime("%Y-%m-%d %H:%M:%S %z")
 
-    def jsonify_log_record(self, log_record):
+    def jsonify(self, log_record):
         """Returns a json string of the log record."""
         log_record_clean = OrderedDict()
         for key, value in log_record.items():
             log_record_clean[key] = value[0] if value else None
 
         formatted_json = json.dumps(log_record_clean, default=self.json_default, cls=self.json_encoder)
-
         return formatted_json
 
     def format(self, record):
@@ -161,9 +170,10 @@ class LoggingJsonFormatter(jsonlogger.JsonFormatter):
         for k, e in extra_log_sorted.items():
             log_record_ordered.setdefault(k, []).append(e)
 
-        formatted_json = self.jsonify_log_record(log_record_ordered)
+        formatted_json = self.jsonify(log_record_ordered)
 
-        if sys.stdin.isatty():
+        if (self.logger_output == LoggingOutput.STDOUT_COLOR or self.logger_output is None) \
+                and sys.stdin.isatty():
             json_lexer = LoggerJsonLexer()
             term_formatter = pygments.formatters.TerminalFormatter(colorscheme=COLOR_SCHEME)
 

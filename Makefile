@@ -1,7 +1,7 @@
 #   Makefile
 #
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# copyright Copyright (c) 2016, TUNE Inc. (http://www.tune.com)
+# copyright Copyright (c) 2017, TUNE Inc. (http://www.tune.com)
 #
 
 .PHONY: clean version build dist local-dev yapf pyflakes pylint
@@ -95,12 +95,33 @@ remove-package: uninstall-package site-packages
 	@echo "======================================================"
 	rm -fR $(PYTHON3_SITE_PACKAGES)/$(PACKAGE_PREFIX)*
 
-install: remove-package
+install-requirements:
+	@echo "======================================================"
+	@echo install-requirements $(PACKAGE)
+	@echo "======================================================"
+	$(PIP3) install --upgrade pip
+	$(PIP3) install -r $(REQ_FILE)
+	$(PIP3) uninstall --yes --no-input -r $(REQ_FILE)
+	$(PIP3) install --upgrade -r $(REQ_FILE)
+	@echo "======================================================"
+
+install-package: remove-package
+	@echo "======================================================"
+	@echo install-package $(PACKAGE)
+	@echo "======================================================"
+	$(PIP3) install --upgrade pip
+	@if [ -a $(WHEEL_ARCHIVE) ] ; then \
+		echo "python package $(WHEEL_ARCHIVE) Found"; \
+		$(PIP3) install --upgrade $(WHEEL_ARCHIVE) ; \
+	else \
+		echo "python package $(WHEEL_ARCHIVE) Not Found"; \
+	fi
+	@echo "======================================================"
+
+install: install-requirements install-package
 	@echo "======================================================"
 	@echo install $(PACKAGE)
 	@echo "======================================================"
-	$(PIP3) install --upgrade pip
-	$(PIP3) install --upgrade $(WHEEL_ARCHIVE)
 	$(PIP3) freeze | grep $(PACKAGE)
 
 freeze:
@@ -133,7 +154,9 @@ local-dev: remove-package
 	@echo "======================================================"
 	$(PIP3) install --upgrade freeze
 	$(PIP3) install --upgrade .
+	@echo "======================================================"
 	$(PIP3) freeze | grep $(PACKAGE)
+	@echo "======================================================"
 
 dist: clean
 	@echo "======================================================"
@@ -156,14 +179,21 @@ build: clean
 	@echo "======================================================"
 	@echo build $(PACKAGE)
 	@echo "======================================================"
-	$(PIP3) install --upgrade -r requirements.txt
+	$(PIP3) install --upgrade -r $(REQ_FILE)
 	$(PYTHON3) $(SETUP_FILE) clean
 	$(PYTHON3) $(SETUP_FILE) bdist_wheel
 	$(PYTHON3) $(SETUP_FILE) bdist_egg
 	$(PYTHON3) $(SETUP_FILE) sdist --format=zip,gztar
 	$(PYTHON3) $(SETUP_FILE) build
 	$(PYTHON3) $(SETUP_FILE) install
+	@echo "======================================================"
 	ls -al ./dist/$(PACKAGE_PREFIX_WILDCARD)
+	@echo "======================================================"
+	$(PIP3) install --upgrade freeze
+	$(PIP3) install --upgrade .
+	@echo "======================================================"
+	$(PIP3) freeze | grep $(PACKAGE)
+	@echo "======================================================"
 
 tools-requirements: $(TOOLS_REQ_FILE)
 	@echo "======================================================"
@@ -214,6 +244,51 @@ list-package: site-packages
 	@echo list-packages $(PACKAGE)
 	@echo "======================================================"
 	ls -al $(PYTHON3_SITE_PACKAGES)/$(PACKAGE_PREFIX)*
+
+run-examples:
+	@echo "======================================================"
+	@echo run-examples $(PACKAGE)
+	@echo "======================================================"
+	$(PYTHON3) examples/example_logging_json.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_logging_json_buffer.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_logging_json_file.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_logging_json_stdout.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_logging_json_stdout_color.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_logging_standard.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_logging_standard_buffer.py
+	@echo "======================================================"
+
+run-core-examples:
+	@echo "======================================================"
+	@echo run-core-examples $(PACKAGE)
+	@echo "======================================================"
+	$(PYTHON3) examples/core/example_core_logger_json.py
+	@echo "======================================================"
+	$(PYTHON3) examples/core/example_core_logger_standard.py
+	@echo "======================================================"
+	$(PYTHON3) examples/core/example_core_logger_json_lexer.py
+	@echo "======================================================"
+
+test:
+	py.test --verbose tests
+
+coverage:
+	py.test --verbose --cov-report html --cov=$(PACKAGE_SUFFIX) tests
+
+coverage-percent:
+	py.test --verbose --cov=$(PACKAGE_SUFFIX) tests
+	$(PYTHON3) examples/example_tune_logging_json_stdout.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_tune_logging_json_stdout_color.py
+	@echo "======================================================"
+	$(PYTHON3) examples/example_tune_logging_json_file.py
+	@echo "======================================================"
 
 list:
 	cat Makefile | grep "^[a-z]" | awk '{print $$1}' | sed "s/://g" | sort

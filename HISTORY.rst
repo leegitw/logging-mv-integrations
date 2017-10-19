@@ -3,6 +3,10 @@
 Release History
 ===============
 
+0.1.6 (2017-10-19)
+------------------
+- Logging Output: FILE, STDOUT, STDOUT_COLOR
+
 0.1.5 (2017-10-17)
 ------------------
 - Fix standard format

@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-========
+
 Overview
 ========
 
@@ -59,13 +59,14 @@ Usage
 -----
 
 .. code-block:: python
+
     import logging
-    from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
+    from logging_mv_integrations import (LoggingFormat, get_logger, __version__)
 
     tune_logger = get_logger(
         logger_name=__name__,
         logger_version=__version__,
-        logger_format=TuneLoggingFormat.JSON,
+        logger_format=LoggingFormat.JSON,
         logger_level=logging.DEBUG
     )
 
@@ -80,13 +81,14 @@ Example: Logging JSON Format
 ----------------------------
 
 .. code-block:: python
+
     import logging
-    from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
+    from logging_mv_integrations import (LoggingFormat, get_logger, __version__)
 
     tune_logger = get_logger(
         logger_name=__name__,
         logger_version=__version__,
-        logger_format=TuneLoggingFormat.JSON,
+        logger_format=LoggingFormat.JSON,
         logger_level=logging.DEBUG
     )
 
@@ -98,6 +100,7 @@ Example: Logging JSON Format
     tune_logger.exception("logging: exception", extra={'test': __name__})
 
 .. code-block:: bash
+
     python3 examples/example_tune_logging_json.py
 
     {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "INFO", "name": "__main__", "version": "0.1.3", "message": "logging: info", "test": "__main__"}
@@ -114,6 +117,14 @@ Dependencies
 several custom modules that are held within PyPI: https://pypi.python.org/pypi
 
 .. code-block:: bash
+
+    make install-requirements
+
+or
+
+.. code-block:: bash
+
+    python3 -m pip uninstall --yes --no-input -r requirements.txt
     python3 -m pip install --upgrade -r requirements.txt
 
 
@@ -144,4 +155,3 @@ We definitely want to hear your feedback.
 
 Report issues using the `Github Issue Tracker`:
 https://github.com/TuneLab/tune-mv-integration-python/issues
-
