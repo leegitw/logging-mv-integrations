@@ -3,7 +3,6 @@
 #  @copyright 2017 TUNE, Inc. (http://www.tune.com)
 #  @namespace logging_mv_integrations
 
-import copy
 import logging
 
 class LoggerAdapterCustom(logging.LoggerAdapter):
@@ -35,10 +34,9 @@ class LoggerAdapterCustom(logging.LoggerAdapter):
         """
         Process the logging message and keyword arguments.
         """
-        kwargs_clone = copy.deepcopy(kwargs)
-        extra = kwargs_clone.get('extra')
+        extra = kwargs.get('extra')
         if extra:
-            kwargs_clone['extra'].update({'version': self.extra['version']})
+            kwargs['extra'].update({'version': self.extra['version']})
         else:
-            kwargs_clone['extra'] = {'version': self.extra['version']}
-        return msg, kwargs_clone
+            kwargs['extra'] = {'version': self.extra['version']}
+        return msg, kwargs
