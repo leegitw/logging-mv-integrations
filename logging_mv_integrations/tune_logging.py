@@ -3,7 +3,6 @@
 #  @copyright 2016 TUNE, Inc. (http://www.tune.com)
 #  @namespace logging_mv_integrations
 
-import copy
 import logging
 import logging.config
 from .logging_json_formatter import LoggingJsonFormatter
@@ -13,13 +12,13 @@ from .logging_format import TuneLoggingFormat
 class CustomAdapter(logging.LoggerAdapter):
 
     def process(self, msg, kwargs):
-        kwargs_clone = copy.deepcopy(kwargs)
-        extra = kwargs_clone.get('extra')
+
+        extra = kwargs.get('extra')
         if extra:
-            kwargs_clone['extra'].update({'version': self.extra['version']})
+            kwargs['extra'].update({'version': self.extra['version']})
         else:
-            kwargs_clone['extra'] = {'version': self.extra['version']}
-        return msg, kwargs_clone
+            kwargs['extra'] = {'version': self.extra['version']}
+        return msg, kwargs
 
 
 def get_logging_level(str_logging_level):
