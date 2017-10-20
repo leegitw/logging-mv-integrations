@@ -22,14 +22,14 @@ def get_logger(
     logger_level=logging.INFO,
     logger_format=LoggingFormat.JSON,
     logger_output=LoggingOutput.STDOUT_COLOR,
-    logger_handler=None,
-    logger_file=None
+    logger_handler=None
 ):
     """
         logger_name      Return a logger with the specified logger_name, creating it if necessary.
         logger_level     Set the root logger level to the specified level.
-        logger_filename  Specifies that a FileHandler be created, using the specified
-              filename, rather than a StreamHandler.
+        logger_format    LoggerFormat
+        logger_output    LoggerOutput
+        logger_handler
     """
     if logger_format == LoggingFormat.STANDARD:
         formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
@@ -45,20 +45,15 @@ def get_logger(
     if logger_handler is None:
         if logger_output == LoggingOutput.FILE:
 
-            logging_dir = "./_tmp"
+            logging_dir = "./tmp"
             if not os.path.isdir(logging_dir):
                 os.makedirs(logging_dir)
 
-            if logger_file is None:
-                # epoch_time = str(time.time()).replace('.', '_')
-                epoch_time = int(time.time())
-                epoch_file_time = int(math.ceil((epoch_time + 5)/ 10.0)) * 10
-                logging_file = f"{logging_dir}/log_{logger_format}_{epoch_file_time}.json"
-            else:
-                logging_file = f"{logging_dir}/{logger_file}_{logger_format}.json"
-
-            # if os.path.exists(logging_file):
-            #     os.remove(logging_file)
+            # Log name combines logger_format and epoch time in seconds
+            # rounded-up to the nearest 10 seconds
+            epoch_time_sec = int(time.time())
+            epoch_time_sec_ceil = int(math.ceil((epoch_time_sec + 10) / 10.0)) * 10
+            logging_file = f"{logging_dir}/log_{logger_format}_{epoch_time_sec_ceil}.json"
 
             open(logging_file, "w+")
             logger_handler = logging.FileHandler(logging_file, encoding='utf-8')
