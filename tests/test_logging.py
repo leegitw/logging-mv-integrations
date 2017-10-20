@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#  @copyright 2016 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2017 TUNE, Inc. (http://www.tune.com)
 #  @namespace logging_mv_integrations
-
 
 from test import support
 import unittest
@@ -10,12 +9,18 @@ import logging
 import io
 import os
 from logging_mv_integrations import (
+    LoggingFormat,
     LoggingOutput,
     get_logger,
     __version__
 )
 
 class LoggingTest(unittest.TestCase):
+
+    def test_logging_format(self):
+        self.assertTrue(LoggingFormat.validate(LoggingFormat.JSON))
+        self.assertTrue(LoggingFormat.validate(LoggingFormat.STANDARD))
+        self.assertFalse(LoggingFormat.validate("invalid"))
 
     def test_logging_output(self):
         self.assertTrue(LoggingOutput.validate(LoggingOutput.STDOUT))
@@ -24,13 +29,11 @@ class LoggingTest(unittest.TestCase):
         self.assertFalse(LoggingOutput.validate("invalid"))
 
     def test_logging_file(self):
-        logger_file = "test_log"
         logger = get_logger(
             logger_name=__name__,
             logger_version=__version__,
             logger_level=logging.DEBUG,
-            logger_output=LoggingOutput.FILE,
-            logger_file=logger_file
+            logger_output=LoggingOutput.FILE
         )
 
         self.assertIsNotNone(logger)
@@ -70,8 +73,8 @@ class LoggingTest(unittest.TestCase):
         logger.exception("logging: exception", extra={'test': __name__})
 
         self.assertIsNotNone(buffer.getvalue())
-
         buffer.close()
+
 
 # Set the locale to the platform-dependent default.  I have no idea
 # why the test does this, but in any case we save the current locale

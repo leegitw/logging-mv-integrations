@@ -27,9 +27,9 @@ def get_logger(
     """
         logger_name      Return a logger with the specified logger_name, creating it if necessary.
         logger_level     Set the root logger level to the specified level.
-        logger_format    LoggerFormat
-        logger_output    LoggerOutput
-        logger_handler
+        logger_format    LoggerFormat.
+        logger_output    LoggerOutput.
+        logger_handler   Provide custom logging handler.
     """
     if logger_format == LoggingFormat.STANDARD:
         formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
