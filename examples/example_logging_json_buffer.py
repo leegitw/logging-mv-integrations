@@ -20,13 +20,14 @@ logger_handler = logging.StreamHandler(buffer)
 logger = get_logger(
     logger_name=__name__,
     logger_version=__version__,
-    logger_level=logging.DEBUG,
+    logger_level=logging.NOTE,
     logger_format=LoggingFormat.JSON,
     logger_output=LoggingOutput.STDOUT,
     logger_handler=logger_handler
 )
 
 logger.info("logging: info", extra={'test': __name__})
+logger.note("logging: note", extra={'test': __name__})
 logger.debug("logging: debug", extra={'test': __name__})
 logger.warning("logging: warning", extra={'test': __name__})
 logger.error("logging: error", extra={'test': __name__})
@@ -40,5 +41,7 @@ buffer_str = '[' + buffer_str + ']'
 
 logJson = json.loads(buffer_str)
 pprint(logJson)
-pprint(len(logJson))
 buffer.close()
+
+pprint(logger.getLevelName())
+

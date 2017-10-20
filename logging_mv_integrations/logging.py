@@ -7,6 +7,7 @@ import os
 import logging
 import logging.config
 import time
+import math
 
 from .logging_json_formatter import LoggingJsonFormatter
 from .logger_adapter_custom import LoggerAdapterCustom
@@ -15,26 +16,11 @@ from .logging_format import LoggingFormat
 from .logging_output import LoggingOutput
 
 
-def get_logging_level(str_logging_level):
-
-    assert str_logging_level
-    str_logging_level = str_logging_level.upper()
-
-    return {
-        'NOTSET': logging.NOTSET,
-        'DEBUG': logging.DEBUG,
-        'INFO': logging.INFO,
-        'WARNING': logging.WARNING,
-        'ERROR': logging.ERROR,
-        'CRITICAL': logging.CRITICAL
-    }.get(str_logging_level, logging.INFO)
-
-
 def get_logger(
     logger_name,
     logger_version=None,
     logger_level=logging.INFO,
-    logger_format=None,
+    logger_format=LoggingFormat.JSON,
     logger_output=LoggingOutput.STDOUT_COLOR,
     logger_handler=None,
     logger_file=None
@@ -64,30 +50,27 @@ def get_logger(
                 os.makedirs(logging_dir)
 
             if logger_file is None:
-                epoch_time_sec = int(time.time())
-                logging_file = f"{logging_dir}/log_{epoch_time_sec}.json"
+                # epoch_time = str(time.time()).replace('.', '_')
+                epoch_time = int(time.time())
+                epoch_file_time = int(math.ceil((epoch_time + 5)/ 10.0)) * 10
+                logging_file = f"{logging_dir}/log_{logger_format}_{epoch_file_time}.json"
             else:
-                logging_file = f"{logging_dir}/{logger_file}.json"
+                logging_file = f"{logging_dir}/{logger_file}_{logger_format}.json"
 
-            if os.path.exists(logging_file):
-                os.remove(logging_file)
+            # if os.path.exists(logging_file):
+            #     os.remove(logging_file)
 
-            open(logging_file, "w")
+            open(logging_file, "w+")
             logger_handler = logging.FileHandler(logging_file, encoding='utf-8')
         else:
             logger_handler = logging.StreamHandler()
 
     logger_handler.setFormatter(formatter)
 
-    logger = logging.getLogger(logger_name)
-    logger.setLevel(logger_level)
+    log = logging.getLogger(logger_name)
+    log.setLevel(logger_level)
 
-    if not len(logger.handlers):
-        logger.addHandler(logger_handler)
+    if not len(log.handlers):
+        log.addHandler(logger_handler)
 
-    return LoggerAdapterCustom(logger_output, logging_file, logger, {'version': logger_version})
-
-
-
-
-
+    return LoggerAdapterCustom(logger_output, logging_file, log, {'version': logger_version})
