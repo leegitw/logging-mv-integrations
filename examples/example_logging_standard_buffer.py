@@ -17,7 +17,7 @@ from pprintpp import pprint
 buffer = io.StringIO()
 logger_handler = logging.StreamHandler(buffer)
 
-logger = get_logger(
+log = get_logger(
     logger_name=__name__,
     logger_version=__version__,
     logger_level=logging.NOTE,
@@ -26,13 +26,13 @@ logger = get_logger(
     logger_handler=logger_handler
 )
 
-logger.info("logging: info", extra={'test': __name__})
-logger.note("logging: note", extra={'test': __name__})
-logger.debug("logging: debug", extra={'test': __name__})
-logger.warning("logging: warning", extra={'test': __name__})
-logger.error("logging: error", extra={'test': __name__})
-logger.critical("logging: critical", extra={'test': __name__})
-logger.exception("logging: exception", extra={'test': __name__})
+log.info("logging: info", extra={'test': __name__})
+log.note("logging: note", extra={'test': __name__})
+log.debug("logging: debug", extra={'test': __name__})
+log.warning("logging: warning", extra={'test': __name__})
+log.error("logging: error", extra={'test': __name__})
+log.critical("logging: critical", extra={'test': __name__})
+log.exception("logging: exception", extra={'test': __name__})
 
 buffer_str = buffer.getvalue()
 buffer_lines = buffer_str.splitlines()
@@ -40,4 +40,4 @@ pprint(buffer_lines)
 
 buffer.close()
 
-pprint(logger.getLevelName())
+pprint(log.getLevelName())

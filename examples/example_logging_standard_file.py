@@ -12,7 +12,7 @@ from logging_mv_integrations import (
     __version__
 )
 
-logger = get_logger(
+log = get_logger(
     logger_name=__name__,
     logger_version=__version__,
     logger_level=logging.NOTE,
@@ -20,17 +20,17 @@ logger = get_logger(
     logger_output=LoggingOutput.FILE
 )
 
-logger.info("logging: info", extra={'test': __name__})
-logger.note("logging: note", extra={'test': __name__})
-logger.debug("logging: debug", extra={'test': __name__})
-logger.warning("logging: warning", extra={'test': __name__})
-logger.error("logging: error", extra={'test': __name__})
-logger.critical("logging: critical", extra={'test': __name__})
-logger.exception("logging: exception", extra={'test': __name__})
+log.info("logging: info", extra={'test': __name__})
+log.note("logging: note", extra={'test': __name__})
+log.debug("logging: debug", extra={'test': __name__})
+log.warning("logging: warning", extra={'test': __name__})
+log.error("logging: error", extra={'test': __name__})
+log.critical("logging: critical", extra={'test': __name__})
+log.exception("logging: exception", extra={'test': __name__})
 
-pprint(f"Logger file path: {logger.logging_file}")
+pprint(f"Logger file path: {log.logger_path}")
 
-logger_fp = open(logger.logging_file,'r')
+logger_fp = open(log.logger_path,'r')
 pprint(logger_fp.readlines())
 
-pprint(logger.getLevelName())
+pprint(log.getLevelName())

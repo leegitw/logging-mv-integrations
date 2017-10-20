@@ -8,6 +8,7 @@ import logging
 import logging.config
 import time
 import math
+from pprintpp import pprint
 
 from .logging_json_formatter import LoggingJsonFormatter
 from .logger_adapter_custom import LoggerAdapterCustom
@@ -22,7 +23,8 @@ def get_logger(
     logger_level=logging.INFO,
     logger_format=LoggingFormat.JSON,
     logger_output=LoggingOutput.STDOUT_COLOR,
-    logger_handler=None
+    logger_handler=None,
+    logger_file=None
 ):
     """
         logger_name      Return a logger with the specified logger_name, creating it if necessary.
@@ -41,7 +43,7 @@ def get_logger(
             fmt='%(asctime)s %(levelname)s %(name)s %(version)s %(message)s'
         )
 
-    logging_file = None
+    logger_path = None
     if logger_handler is None:
         if logger_output == LoggingOutput.FILE:
 
@@ -49,14 +51,21 @@ def get_logger(
             if not os.path.isdir(logging_dir):
                 os.makedirs(logging_dir)
 
-            # Log name combines logger_format and epoch time in seconds
-            # rounded-up to the nearest 10 seconds
-            epoch_time_sec = int(time.time())
-            epoch_time_sec_ceil = int(math.ceil((epoch_time_sec + 10) / 10.0)) * 10
-            logging_file = f"{logging_dir}/log_{logger_format}_{epoch_time_sec_ceil}.json"
+            if logger_file is None:
+                logger_name_tag = logger_name.replace('.', '_')
 
-            open(logging_file, "w+")
-            logger_handler = logging.FileHandler(logging_file, encoding='utf-8')
+                # Log name combines logger_format and epoch time in seconds
+                # rounded-up to the nearest 10 seconds
+                epoch_time_sec = int(time.time())
+                epoch_time_sec_ceil = int(math.ceil((epoch_time_sec + 10) / 10.0)) * 10
+
+                logger_file = f"log_{logger_name_tag}_{epoch_time_sec_ceil}"
+
+            logger_path = f"{logging_dir}/{logger_file}.json"
+            if not os.path.isfile(logger_path):
+                open(logger_path, "w+")
+
+            logger_handler = logging.FileHandler(logger_path, encoding='utf-8')
         else:
             logger_handler = logging.StreamHandler()
 
@@ -68,4 +77,4 @@ def get_logger(
     if not len(log.handlers):
         log.addHandler(logger_handler)
 
-    return LoggerAdapterCustom(logger_output, logging_file, log, {'version': logger_version})
+    return LoggerAdapterCustom(logger_output, logger_path, log, {'version': logger_version})

@@ -14,24 +14,26 @@ class LoggerAdapterCustom(logging.LoggerAdapter):
     information in logging output.
     """
 
-    __logging_output = None
-    __logging_file = None
+    __logger_output = None
+    __logger_file = None
 
-    def __init__(self, logging_output, logging_file, *args, **kwargs):
+
+    def __init__(self, logger_output, logger_path, *args, **kwargs):
         """
         Initialize the adapter
         """
-        self.__logging_output = logging_output
-        self.__logging_file = logging_file
+        self.__logger_output = logger_output
+        self.__logger_path = logger_path
+
         super(LoggerAdapterCustom, self).__init__(*args, **kwargs)
 
     @property
     def logging_output(self):
-        return self.__logging_output
+        return self.__logger_output
 
     @property
-    def logging_file(self):
-        return self.__logging_file
+    def logger_path(self):
+        return self.__logger_path
 
     def process(self, msg, kwargs):
         """

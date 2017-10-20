@@ -32,14 +32,14 @@ log_config = {
 
 # Configure logging
 dictConfig(log_config)
-logger = logging.getLogger('example_logger')
+log = logging.getLogger('example_logger')
 
-logger.debug('often makes a very good meal of %s', 'visiting tourists')
+log.debug('often makes a very good meal of %s', 'visiting tourists')
 
-logger.info("Hello World")
+log.info("Hello World")
 
 logging.debug('This message should go to the log file')
 logging.info('So should this')
 logging.warning('And this, too')
 
-logger.info("Hello World")
+log.info("Hello World")

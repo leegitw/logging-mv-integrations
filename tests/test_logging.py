@@ -29,25 +29,25 @@ class LoggingTest(unittest.TestCase):
         self.assertFalse(LoggingOutput.validate("invalid"))
 
     def test_logging_file(self):
-        logger = get_logger(
+        log = get_logger(
             logger_name=__name__,
             logger_version=__version__,
             logger_level=logging.DEBUG,
             logger_output=LoggingOutput.FILE
         )
 
-        self.assertIsNotNone(logger)
-        self.assertTrue(os.path.exists(logger.logging_file))
+        self.assertIsNotNone(log)
+        self.assertTrue(os.path.exists(log.logger_path))
 
-        logger.info("logging: info", extra={'test': __name__})
-        logger.debug("logging: debug", extra={'test': __name__})
-        logger.warning("logging: warning", extra={'test': __name__})
-        logger.error("logging: error", extra={'test': __name__})
-        logger.critical("logging: critical", extra={'test': __name__})
-        logger.exception("logging: exception", extra={'test': __name__})
+        log.info("logging: info", extra={'test': __name__})
+        log.debug("logging: debug", extra={'test': __name__})
+        log.warning("logging: warning", extra={'test': __name__})
+        log.error("logging: error", extra={'test': __name__})
+        log.critical("logging: critical", extra={'test': __name__})
+        log.exception("logging: exception", extra={'test': __name__})
 
-        self.assertIsNotNone(logger.logging_file)
-        logger_fp = open(logger.logging_file, 'r')
+        self.assertIsNotNone(log.logger_path)
+        logger_fp = open(log.logger_path, 'r')
         self.assertIsNotNone(logger_fp)
         self.assertIsNotNone(logger_fp.readlines())
 
@@ -55,7 +55,7 @@ class LoggingTest(unittest.TestCase):
         buffer = io.StringIO()
         logger_handler = logging.StreamHandler(buffer)
 
-        logger = get_logger(
+        log = get_logger(
             logger_name=__name__,
             logger_version=__version__,
             logger_level=logging.DEBUG,
@@ -63,14 +63,14 @@ class LoggingTest(unittest.TestCase):
             logger_handler=logger_handler
         )
 
-        self.assertIsNotNone(logger)
+        self.assertIsNotNone(log)
 
-        logger.info("logging: info", extra={'test': __name__})
-        logger.debug("logging: debug", extra={'test': __name__})
-        logger.warning("logging: warning", extra={'test': __name__})
-        logger.error("logging: error", extra={'test': __name__})
-        logger.critical("logging: critical", extra={'test': __name__})
-        logger.exception("logging: exception", extra={'test': __name__})
+        log.info("logging: info", extra={'test': __name__})
+        log.debug("logging: debug", extra={'test': __name__})
+        log.warning("logging: warning", extra={'test': __name__})
+        log.error("logging: error", extra={'test': __name__})
+        log.critical("logging: critical", extra={'test': __name__})
+        log.exception("logging: exception", extra={'test': __name__})
 
         self.assertIsNotNone(buffer.getvalue())
         buffer.close()
