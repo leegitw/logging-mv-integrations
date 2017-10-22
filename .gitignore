@@ -4,9 +4,11 @@
 .metadata/
 .project
 .settings/
+.cache/
 .pydevproject
 .idea
 .dartignore
+.coverage
 
 # Code build files
 *.egg-info/

@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-========
+
 Overview
 ========
 
@@ -58,54 +58,134 @@ logging-mv-integrations
 Usage
 -----
 
+Function: get_logger()
+~~~~~~~~~~~~~~~~~~~~~~
+
 .. code-block:: python
-    import logging
-    from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
 
-    tune_logger = get_logger(
-        logger_name=__name__,
-        logger_version=__version__,
-        logger_format=TuneLoggingFormat.JSON,
-        logger_level=logging.DEBUG
-    )
+    def get_logger(
+        logger_name,
+        logger_version=None,
+        logger_level=logging.INFO,
+        logger_format=LoggingFormat.JSON,
+        logger_output=LoggingOutput.STDOUT_COLOR,
+        logger_handler=None
+    ):
 
-    tune_logger.info("logging: info", extra={'test': __name__})
-    tune_logger.debug("logging: debug", extra={'test': __name__})
-    tune_logger.warning("logging: warning", extra={'test': __name__})
-    tune_logger.error("logging: error", extra={'test': __name__})
-    tune_logger.critical("logging: critical", extra={'test': __name__})
-    tune_logger.exception("logging: exception", extra={'test': __name__})
++-----------------+-------------------------------------------------------------------------------------------------------------------------+
+| Parameter       | Purpose                                                                                                                 |
++=================+=========================================================================================================================+
+| logger_name     | Return a logger with the specified name or, if name is None, return a logger which is the root logger of the hierarchy. |
++-----------------+-------------------------------------------------------------------------------------------------------------------------+
+| logger_version  |                                                                                                                         |
++-----------------+-------------------------------------------------------------------------------------------------------------------------+
+| logger_format   | LoggingFormat                                                                                                           |
++-----------------+-------------------------------------------------------------------------------------------------------------------------+
+| logger_output   | LoggingOutput                                                                                                           |
++-----------------+-------------------------------------------------------------------------------------------------------------------------+
+| logger_handler  | logging.StreamHandler() or logging.FileHandler()                                                                        |
++-----------------+-------------------------------------------------------------------------------------------------------------------------+
+
+Logging Levels
+~~~~~~~~~~~~~~
+
+Same logging levels, however, including one additional level **NOTE**.
+
++------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| Level      | When it’s used                                                                                                                                 |
++============+================================================================================================================================================+
+| DEBUG      | Detailed information, typically of interest only when diagnosing problems.                                                                     |
++------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| **NOTE**   | **Detailed information, request processing, for example, request using cURL**                                                                  |
++------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| INFO       | Confirmation that things are working as expected.  *[DEFAULT]*                                                                                 |
++------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| WARNING    | An indication that something unexpected happened, or indicative of some problem in the near future. The software is still working as expected. |
++------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERROR      | Due to a more serious problem, the software has not been able to perform some function.                                                        |
++------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| CRITICAL   | A serious error, indicating that the program itself may be unable to continue running.                                                         |
++------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+Logging Format
+~~~~~~~~~~~~~~
+
++------------+-------------------------------------------------------------------------------------------------------+
+| Format     | Purpose                                                                                               |
++============+=======================================================================================================+
+| STANDARD   | Standard logging format.                                                                              |
++------------+-------------------------------------------------------------------------------------------------------+
+| JSON       | JSON logging format.  *[DEFAULT]*                                                                     |
++------------+-------------------------------------------------------------------------------------------------------+
+
+.. code-block:: python
+
+    class LoggingFormat(object):
+        """TUNE Logging Format ENUM
+        """
+        STANDARD = "standard"
+        JSON = "json"
+
+
+Logging Output
+~~~~~~~~~~~~~~
+
++--------------+----------------------------------------------------------------------------------------------+
+| Output       | Purpose                                                                                      |
++==============+==============================================================================================+
+| STDOUT       | Standard Output to terminal                                                                  |
++--------------+----------------------------------------------------------------------------------------------+
+| STDOUT_COLOR | Standard Output using colored terminal                                                       |
++--------------+----------------------------------------------------------------------------------------------+
+| FILE         | Standard Output to file created within *./tmp/log_<epoch time seconds>.json*.                |
++--------------+----------------------------------------------------------------------------------------------+
+
+.. code-block:: python
+
+    class LoggingOutput(object):
+        """TUNE Logging Output ENUM
+        """
+        STDOUT = "stdout"
+        STDOUT_COLOR = "color"
+        FILE = "file"
+
 
 Example: Logging JSON Format
 ----------------------------
 
 .. code-block:: python
-    import logging
-    from logging_mv_integrations import (TuneLoggingFormat, get_logger, __version__)
 
-    tune_logger = get_logger(
+    import logging
+    from logging_mv_integrations import (LoggingFormat, get_logger, __version__)
+
+    log = get_logger(
         logger_name=__name__,
         logger_version=__version__,
-        logger_format=TuneLoggingFormat.JSON,
-        logger_level=logging.DEBUG
+        logger_format=LoggingFormat.JSON,
+        logger_level=logging.NOTE
     )
 
-    tune_logger.info("logging: info", extra={'test': __name__})
-    tune_logger.debug("logging: debug", extra={'test': __name__})
-    tune_logger.warning("logging: warning", extra={'test': __name__})
-    tune_logger.error("logging: error", extra={'test': __name__})
-    tune_logger.critical("logging: critical", extra={'test': __name__})
-    tune_logger.exception("logging: exception", extra={'test': __name__})
+    log.info("logging: info", extra={'test': __name__})
+    log.note("logging: note", extra={'test': __name__})
+    log.debug("logging: debug", extra={'test': __name__})
+    log.warning("logging: warning", extra={'test': __name__})
+    log.error("logging: error", extra={'test': __name__})
+    log.critical("logging: critical", extra={'test': __name__})
+    log.exception("logging: exception", extra={'test': __name__})
+
 
 .. code-block:: bash
-    python3 examples/example_tune_logging_json.py
 
-    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "INFO", "name": "__main__", "version": "0.1.3", "message": "logging: info", "test": "__main__"}
-    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "DEBUG", "name": "__main__", "version": "0.1.3", "message": "logging: debug", "test": "__main__"}
-    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "WARNING", "name": "__main__", "version": "0.1.3", "message": "logging: warning", "test": "__main__"}
-    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.3", "message": "logging: error", "test": "__main__"}
-    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "CRITICAL", "name": "__main__", "version": "0.1.3", "message": "logging: critical", "test": "__main__"}
-    {"asctime": "2017-10-12 16:27:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.3", "message": "logging: exception", "exc_info": "NoneType: None", "test": "__main__"}
+    python3 examples/example_logging_json.py
+
+{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "INFO", "name": "__main__", "version": "0.1.6", "message": "logging: info", "test": "__main__"}
+{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "NOTE", "name": "__main__", "version": "0.1.6", "message": "logging: note", "test": "__main__"}
+{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "WARNING", "name": "__main__", "version": "0.1.6", "message": "logging: warning", "test": "__main__"}
+{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.6", "message": "logging: error", "test": "__main__"}
+{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "CRITICAL", "name": "__main__", "version": "0.1.6", "message": "logging: critical", "test": "__main__"}
+{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.6", "message": "logging: exception", "exc_info": "NoneType: None", "test": "__main__"}
+
 
 Dependencies
 ============
@@ -114,6 +194,14 @@ Dependencies
 several custom modules that are held within PyPI: https://pypi.python.org/pypi
 
 .. code-block:: bash
+
+    make install-requirements
+
+or
+
+.. code-block:: bash
+
+    python3 -m pip uninstall --yes --no-input -r requirements.txt
     python3 -m pip install --upgrade -r requirements.txt
 
 
@@ -135,13 +223,3 @@ Support Packages
 - python-json-logger: https://pypi.python.org/pypi/python-json-logger
 - Pygments: https://pypi.python.org/pypi/Pygments
 - wheel: https://pypi.python.org/pypi/wheel
-
-
-Reporting Issues
-================
-
-We definitely want to hear your feedback.
-
-Report issues using the `Github Issue Tracker`:
-https://github.com/TuneLab/tune-mv-integration-python/issues
-
