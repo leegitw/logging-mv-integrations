@@ -56,7 +56,7 @@ clean:
 	@echo "======================================================"
 	@echo clean $(PACKAGE)
 	@echo "======================================================"
-	rm -fR _tmp/*.json
+	rm -fR tmp/*.json
 	rm -fR __pycache__ venv "*.pyc" build/*    \
 		$(PACKAGE_PREFIX)/__pycache__/         \
 		$(PACKAGE_PREFIX)/helpers/__pycache__/ \
@@ -250,7 +250,7 @@ run-examples:
 	@echo "======================================================"
 	@echo run-examples $(PACKAGE)
 	@echo "======================================================"
-	rm -fR _tmp/*.json
+	rm -fR tmp/*.json
 	@echo "======================================================"
 	$(PYTHON3) examples/example_logging_json.py
 	@echo "======================================================"
@@ -266,14 +266,14 @@ run-examples:
 	@echo "======================================================"
 	$(PYTHON3) examples/example_logging_standard_file.py
 	@echo "======================================================"
-	ls -al _tmp/*.json
+	ls -al tmp/*.json
 	@echo "======================================================"
 
 run-core-examples:
 	@echo "======================================================"
 	@echo run-core-examples $(PACKAGE)
 	@echo "======================================================"
-	rm -fR _tmp/*.json
+	rm -fR tmp/*.json
 	@echo "======================================================"
 	$(PYTHON3) examples/core/example_core_logger_json.py
 	@echo "======================================================"

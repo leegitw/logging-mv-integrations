@@ -28,7 +28,7 @@ log.error("logging: error", extra={'test': __name__})
 log.critical("logging: critical", extra={'test': __name__})
 log.exception("logging: exception", extra={'test': __name__})
 
-pprint(f"Logger file path: {log.logging_file}")
+pprint(f"Logger file path: {log.logger_path}")
 
 logger_fp = open(log.logger_path, 'r')
 pprint(logger_fp.readlines())

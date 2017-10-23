@@ -53,14 +53,14 @@ def get_logger(
                 os.makedirs(logging_dir)
 
             if logger_filename is None:
-                logger_name_tag = logger_name.replace('.', '_')
+                # logger_name_tag = logger_name.replace('.', '_')
 
                 # Log name combines logger_format and epoch time in seconds
                 # rounded-up to the nearest 10 seconds
                 epoch_time_sec = int(time.time())
                 epoch_time_sec_ceil = int(math.ceil((epoch_time_sec + 10) / 10.0)) * 10
 
-                logger_filename = f"log_{logger_name_tag}_{epoch_time_sec_ceil}"
+                logger_filename = f"log_{epoch_time_sec_ceil}"
 
             logger_path = f"{logging_dir}/{logger_filename}.json"
             if not os.path.isfile(logger_path):
