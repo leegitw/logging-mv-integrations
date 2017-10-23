@@ -70,7 +70,7 @@ setup(
     author='TUNE Inc., TuneLab',
     author_email='jefft@tune.com',
     url='https://github.com/TuneLab/logging-mv-integrations',
-    download_url='https://github.com/TuneLab/logging-mv-integrations/archive/v{0}.tar.gz'.format(version),
+    download_url=f'https://github.com/TuneLab/logging-mv-integrations/archive/v{version}.tar.gz',
     keywords=["tune", "reporting", "tmc", "api"],
     license='MIT License',
     zip_safe=False,

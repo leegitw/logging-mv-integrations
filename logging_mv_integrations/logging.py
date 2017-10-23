@@ -24,7 +24,7 @@ def get_logger(
     logger_format=LoggingFormat.JSON,
     logger_output=LoggingOutput.STDOUT_COLOR,
     logger_handler=None,
-    logger_file=None
+    logger_filename=None
 ):
     """
         logger_name      Return a logger with the specified logger_name, creating it if necessary.
@@ -34,7 +34,9 @@ def get_logger(
         logger_handler   Provide custom logging handler.
     """
     if logger_format == LoggingFormat.STANDARD:
-        formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+        formatter = logging.Formatter(
+            '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        )
     else:
         formatter = LoggingJsonFormatter(
             logger_name,
@@ -46,12 +48,11 @@ def get_logger(
     logger_path = None
     if logger_handler is None:
         if logger_output == LoggingOutput.FILE:
-
             logging_dir = "./tmp"
             if not os.path.isdir(logging_dir):
                 os.makedirs(logging_dir)
 
-            if logger_file is None:
+            if logger_filename is None:
                 logger_name_tag = logger_name.replace('.', '_')
 
                 # Log name combines logger_format and epoch time in seconds
@@ -59,9 +60,9 @@ def get_logger(
                 epoch_time_sec = int(time.time())
                 epoch_time_sec_ceil = int(math.ceil((epoch_time_sec + 10) / 10.0)) * 10
 
-                logger_file = f"log_{logger_name_tag}_{epoch_time_sec_ceil}"
+                logger_filename = f"log_{logger_name_tag}_{epoch_time_sec_ceil}"
 
-            logger_path = f"{logging_dir}/{logger_file}.json"
+            logger_path = f"{logging_dir}/{logger_filename}.json"
             if not os.path.isfile(logger_path):
                 open(logger_path, "w+")
 
