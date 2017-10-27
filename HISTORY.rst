@@ -3,6 +3,10 @@
 Release History
 ===============
 
+0.1.7 (2017-10-26)
+------------------
+- Using Formatted String Literals
+
 0.1.6 (2017-10-19)
 ------------------
 - Logging Output: FILE, STDOUT, STDOUT_COLOR
