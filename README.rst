@@ -1,8 +1,13 @@
 .. -*- mode: rst -*-
 
+logging-mv-integrations
+-----------------------
 
-Overview
-========
+Python logging library for TUNE Multiverse Integrations.
+
+
+Badges
+------
 
 .. start-badges
 
@@ -15,6 +20,7 @@ Overview
       - |travis| |coveralls|
     * - package
       - |version| |supported-versions|
+
 
 .. |docs| image:: https://readthedocs.org/projects/logging-mv-integrations/badge/?style=flat
     :alt: Documentation Status
@@ -46,8 +52,16 @@ Overview
 
 .. end-badges
 
-logging-mv-integrations
-=======================
+
+Install
+-------
+
+.. code-block:: bash
+
+    pip install logging_mv_integrations
+
+UML
+---
 
 ``logging-mv-integrations`` is a Python logging library for TUNE Multiverse Integrations.
 
@@ -55,11 +69,9 @@ logging-mv-integrations
    :scale: 50 %
    :alt: UML logging-mv-integrations
 
-Usage
------
 
 Function: get_logger()
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: python
 
@@ -71,6 +83,10 @@ Function: get_logger()
         logger_output=LoggingOutput.STDOUT_COLOR,
         logger_handler=None
     ):
+
+
+get_logger(): Parameters
+------------------------
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------------+
 | Parameter       | Purpose                                                                                                                 |
@@ -86,17 +102,19 @@ Function: get_logger()
 | logger_handler  | logging.StreamHandler() or logging.FileHandler()                                                                        |
 +-----------------+-------------------------------------------------------------------------------------------------------------------------+
 
-Logging Levels
-~~~~~~~~~~~~~~
 
-Same logging levels, however, including one additional level **NOTE**.
+
+Logging Levels
+--------------
+
+Same Python logging levels, including one additional level NOTE.
 
 +------------+------------------------------------------------------------------------------------------------------------------------------------------------+
-| Level      | When it’s used                                                                                                                                 |
+| Level      | Purpose                                                                                                                                        |
 +============+================================================================================================================================================+
 | DEBUG      | Detailed information, typically of interest only when diagnosing problems.                                                                     |
 +------------+------------------------------------------------------------------------------------------------------------------------------------------------+
-| **NOTE**   | **Detailed information, request processing, for example, request using cURL**                                                                  |
+| NOTE       | Detailed information, request processing, for example, request using cURL.                                                                     |
 +------------+------------------------------------------------------------------------------------------------------------------------------------------------+
 | INFO       | Confirmation that things are working as expected.  *[DEFAULT]*                                                                                 |
 +------------+------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -108,8 +126,9 @@ Same logging levels, however, including one additional level **NOTE**.
 +------------+------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
+
 Logging Format
-~~~~~~~~~~~~~~
+--------------
 
 +------------+-------------------------------------------------------------------------------------------------------+
 | Format     | Purpose                                                                                               |
@@ -118,6 +137,7 @@ Logging Format
 +------------+-------------------------------------------------------------------------------------------------------+
 | JSON       | JSON logging format.  *[DEFAULT]*                                                                     |
 +------------+-------------------------------------------------------------------------------------------------------+
+
 
 .. code-block:: python
 
@@ -128,8 +148,9 @@ Logging Format
         JSON = "json"
 
 
+
 Logging Output
-~~~~~~~~~~~~~~
+--------------
 
 +--------------+----------------------------------------------------------------------------------------------+
 | Output       | Purpose                                                                                      |
@@ -141,6 +162,7 @@ Logging Output
 | FILE         | Standard Output to file created within *./tmp/log_<epoch time seconds>.json*.                |
 +--------------+----------------------------------------------------------------------------------------------+
 
+
 .. code-block:: python
 
     class LoggingOutput(object):
@@ -151,8 +173,8 @@ Logging Output
         FILE = "file"
 
 
-Example: Logging JSON Format
-----------------------------
+Logging JSON Format
+-------------------
 
 .. code-block:: python
 
@@ -175,20 +197,31 @@ Example: Logging JSON Format
     log.exception("logging: exception", extra={'test': __name__})
 
 
+Logging JSON Example Output
+---------------------------
+
 .. code-block:: bash
 
-    python3 examples/example_logging_json.py
+    $ python3 examples/example_logging_json.py
 
-{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "INFO", "name": "__main__", "version": "0.1.6", "message": "logging: info", "test": "__main__"}
-{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "NOTE", "name": "__main__", "version": "0.1.6", "message": "logging: note", "test": "__main__"}
-{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "WARNING", "name": "__main__", "version": "0.1.6", "message": "logging: warning", "test": "__main__"}
-{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.6", "message": "logging: error", "test": "__main__"}
-{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "CRITICAL", "name": "__main__", "version": "0.1.6", "message": "logging: critical", "test": "__main__"}
-{"asctime": "2017-10-20 08:31:14 -0700", "levelname": "ERROR", "name": "__main__", "version": "0.1.6", "message": "logging: exception", "exc_info": "NoneType: None", "test": "__main__"}
+    {"asctime": "2017-10-20 08:31:14 -0700", "levelname": "INFO", "name": "__main__",
+    "version": "0.1.6", "message": "logging: info", "test": "__main__"}
+    {"asctime": "2017-10-20 08:31:14 -0700", "levelname": "NOTE", "name": "__main__",
+    "version": "0.1.6", "message": "logging: note", "test": "__main__"}
+    {"asctime": "2017-10-20 08:31:14 -0700", "levelname": "WARNING", "name": "__main__",
+    "version": "0.1.6", "message": "logging: warning", "test": "__main__"}
+    {"asctime": "2017-10-20 08:31:14 -0700", "levelname": "ERROR", "name": "__main__",
+    "version": "0.1.6", "message": "logging: error", "test": "__main__"}
+    {"asctime": "2017-10-20 08:31:14 -0700", "levelname": "CRITICAL", "name": "__main__",
+    "version": "0.1.6", "message": "logging: critical", "test": "__main__"}
+    {"asctime": "2017-10-20 08:31:14 -0700", "levelname": "ERROR", "name": "__main__",
+    "version": "0.1.6", "message": "logging: exception", "exc_info": "NoneType: None",
+    "test": "__main__"}
+
 
 
 Dependencies
-============
+------------
 
 ``logging-mv-integrations`` module is built upon Python 3 and is build upon
 several custom modules that are held within PyPI: https://pypi.python.org/pypi
@@ -197,7 +230,9 @@ several custom modules that are held within PyPI: https://pypi.python.org/pypi
 
     make install-requirements
 
+
 or
+
 
 .. code-block:: bash
 
@@ -205,8 +240,8 @@ or
     python3 -m pip install --upgrade -r requirements.txt
 
 
-TUNE Multiverse Custom Support Packages
----------------------------------------
+Support Packages
+----------------
 
 These packages provide support functionality but are not core
 to Multiverse. Thereby, test and documentation could be shared
