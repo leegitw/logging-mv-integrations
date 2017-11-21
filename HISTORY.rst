@@ -3,6 +3,10 @@
 Release History
 ===============
 
+0.3.1 (2017-11-21)
+------------------
+- README
+
 0.1.7 (2017-10-26)
 ------------------
 - Using Formatted String Literals
