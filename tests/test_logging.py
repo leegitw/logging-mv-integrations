@@ -4,7 +4,7 @@
 #  @namespace logging_mv_integrations
 
 from test import support
-import unittest
+import pytest
 import logging
 import io
 import os
@@ -15,18 +15,18 @@ from logging_mv_integrations import (
     __version__
 )
 
-class LoggingTest(unittest.TestCase):
+class TestLoggingMvIntegration():
 
     def test_logging_format(self):
-        self.assertTrue(LoggingFormat.validate(LoggingFormat.JSON))
-        self.assertTrue(LoggingFormat.validate(LoggingFormat.STANDARD))
-        self.assertFalse(LoggingFormat.validate("invalid"))
+        assert(LoggingFormat.validate(LoggingFormat.JSON) is True)
+        assert(LoggingFormat.validate(LoggingFormat.STANDARD) is True)
+        assert(LoggingFormat.validate("invalid") is False)
 
     def test_logging_output(self):
-        self.assertTrue(LoggingOutput.validate(LoggingOutput.STDOUT))
-        self.assertTrue(LoggingOutput.validate(LoggingOutput.STDOUT_COLOR))
-        self.assertTrue(LoggingOutput.validate(LoggingOutput.FILE))
-        self.assertFalse(LoggingOutput.validate("invalid"))
+        assert(LoggingOutput.validate(LoggingOutput.STDOUT) is True)
+        assert(LoggingOutput.validate(LoggingOutput.STDOUT_COLOR) is True)
+        assert(LoggingOutput.validate(LoggingOutput.FILE) is True)
+        assert(LoggingOutput.validate("invalid") is False)
 
     def test_logging_file(self):
         log = get_logger(
@@ -36,8 +36,8 @@ class LoggingTest(unittest.TestCase):
             logger_output=LoggingOutput.FILE
         )
 
-        self.assertIsNotNone(log)
-        self.assertTrue(os.path.exists(log.logger_path))
+        assert(log is not None)
+        assert(os.path.exists(log.logger_path) is True)
 
         log.info("logging: info", extra={'test': __name__})
         log.debug("logging: debug", extra={'test': __name__})
@@ -46,10 +46,10 @@ class LoggingTest(unittest.TestCase):
         log.critical("logging: critical", extra={'test': __name__})
         log.exception("logging: exception", extra={'test': __name__})
 
-        self.assertIsNotNone(log.logger_path)
+        assert(log.logger_path)
         logger_fp = open(log.logger_path, 'r')
-        self.assertIsNotNone(logger_fp)
-        self.assertIsNotNone(logger_fp.readlines())
+        assert(logger_fp)
+        assert(logger_fp.readlines())
 
     def test_logging_buffer(self):
         buffer = io.StringIO()
@@ -63,7 +63,7 @@ class LoggingTest(unittest.TestCase):
             logger_handler=logger_handler
         )
 
-        self.assertIsNotNone(log)
+        assert(log is not None)
 
         log.info("logging: info", extra={'test': __name__})
         log.debug("logging: debug", extra={'test': __name__})
@@ -72,17 +72,6 @@ class LoggingTest(unittest.TestCase):
         log.critical("logging: critical", extra={'test': __name__})
         log.exception("logging: exception", extra={'test': __name__})
 
-        self.assertIsNotNone(buffer.getvalue())
+        assert(buffer.getvalue() is not None)
         buffer.close()
 
-
-# Set the locale to the platform-dependent default.  I have no idea
-# why the test does this, but in any case we save the current locale
-# first and restore it at the end.
-@support.run_with_locale('LC_ALL', '')
-def test_main():
-    tests = [LoggingTest]
-    support.run_unittest(*tests)
-
-if __name__ == "__main__":
-    test_main()
