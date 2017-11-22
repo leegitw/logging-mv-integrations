@@ -3,8 +3,6 @@
 #  @copyright 2017 TUNE, Inc. (http://www.tune.com)
 #  @namespace logging_mv_integrations
 
-from test import support
-import pytest
 import logging
 import io
 import os
