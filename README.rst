@@ -46,9 +46,9 @@ Badges
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/logging_mv_integrations
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/tune_reporting.svg?style=flat
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/logging-mv-integrations.svg?style=flat
     :alt: Supported versions
-    :target: https://pypi.python.org/pypi/tune_reporting
+    :target: https://pypi.python.org/pypi/logging-mv-integrations
 
 .. end-badges
 
