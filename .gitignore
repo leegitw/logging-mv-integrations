@@ -46,3 +46,7 @@ docs/doxygen/*
 docs/sphinx/_build/*
 
 dist/
+
+# pytest
+/.coverage
+/htmlcov/

@@ -283,19 +283,25 @@ run-core-examples:
 	@echo "======================================================"
 
 test:
+	@echo "======================================================"
+	@echo py.test tests
+	@echo "======================================================"
 	py.test --verbose tests
 
 coverage:
-	py.test --verbose --cov-report html --cov=$(PACKAGE_SUFFIX) tests
+	@echo "======================================================"
+	@echo py.test coverage
+	@echo "======================================================"
+	py.test --verbose --cov-report html --cov=$(PACKAGE_PREFIX) tests
 
 coverage-percent:
-	py.test --verbose --cov=$(PACKAGE_SUFFIX) tests
-	$(PYTHON3) examples/example_tune_logging_json_stdout.py
 	@echo "======================================================"
-	$(PYTHON3) examples/example_tune_logging_json_stdout_color.py
+	@echo py.test coverage percent
 	@echo "======================================================"
-	$(PYTHON3) examples/example_tune_logging_json_file.py
-	@echo "======================================================"
+	py.test --verbose --cov=$(PACKAGE_PREFIX) tests
 
 list:
+	@echo "======================================================"
+	@echo Makefile target list
+	@echo "======================================================"
 	cat Makefile | grep "^[a-z]" | awk '{print $$1}' | sed "s/://g" | sort
