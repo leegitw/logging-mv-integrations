@@ -8,7 +8,6 @@ import logging
 import logging.config
 import time
 import math
-from pprintpp import pprint
 
 from .logging_json_formatter import LoggingJsonFormatter
 from .logger_adapter_custom import LoggerAdapterCustom

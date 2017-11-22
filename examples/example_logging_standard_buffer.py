@@ -5,7 +5,6 @@
 
 import io
 import logging
-from pprintpp import pprint
 from logging_mv_integrations import (
     LoggingFormat,
     LoggingOutput,
