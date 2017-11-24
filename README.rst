@@ -1,7 +1,8 @@
 .. -*- mode: rst -*-
 
+=======================
 logging-mv-integrations
------------------------
+=======================
 
 Python logging library for TUNE Multiverse Integrations.
 
@@ -60,10 +61,11 @@ Install
 
     pip install logging_mv_integrations
 
-UML
----
+Architecture
+------------
 
-``logging-mv-integrations`` is a Python logging library for TUNE Multiverse Integrations.
+``logging-mv-integrations`` is an extension of the `logging facility for Python <https://docs.python.org/3/library/logging.html>`_
+used for TUNE Multiverse Integrations providing custom logger levels, format, and output.
 
 .. image:: ./images/logging_mv_integrations.png
    :scale: 50 %
@@ -86,7 +88,7 @@ Function: get_logger()
 
 
 get_logger(): Parameters
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------------+
 | Parameter       | Purpose                                                                                                                 |
@@ -105,7 +107,7 @@ get_logger(): Parameters
 
 
 Logging Levels
---------------
+^^^^^^^^^^^^^^
 
 Same Python logging levels, including one additional level NOTE.
 
@@ -128,7 +130,7 @@ Same Python logging levels, including one additional level NOTE.
 
 
 Logging Format
---------------
+^^^^^^^^^^^^^^
 
 +------------+-------------------------------------------------------------------------------------------------------+
 | Format     | Purpose                                                                                               |
@@ -150,7 +152,7 @@ Logging Format
 
 
 Logging Output
---------------
+^^^^^^^^^^^^^^
 
 +--------------+----------------------------------------------------------------------------------------------+
 | Output       | Purpose                                                                                      |
@@ -174,7 +176,7 @@ Logging Output
 
 
 Logging JSON Format
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -198,7 +200,7 @@ Logging JSON Format
 
 
 Logging JSON Example Output
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -220,7 +222,7 @@ Logging JSON Example Output
 
 
 
-Dependencies
+Requirements
 ------------
 
 ``logging-mv-integrations`` module is built upon Python 3 and is build upon
@@ -240,21 +242,12 @@ or
     python3 -m pip install --upgrade -r requirements.txt
 
 
-Support Packages
-----------------
-
-These packages provide support functionality but are not core
-to Multiverse. Thereby, test and documentation could be shared
-amongst the team.
-
-- safe-cast: https://pypi.python.org/pypi/safe-cast
-
-
-Support Packages
-----------------
+Packages
+^^^^^^^^
 
 - coloredlogs: https://pypi.python.org/pypi/coloredlogs
 - pprintpp: https://pypi.python.org/pypi/pprintpp
 - python-json-logger: https://pypi.python.org/pypi/python-json-logger
 - Pygments: https://pypi.python.org/pypi/Pygments
+- safe-cast: https://pypi.python.org/pypi/safe-cast
 - wheel: https://pypi.python.org/pypi/wheel
