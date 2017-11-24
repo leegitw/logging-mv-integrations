@@ -1,10 +1,9 @@
 .. -*- mode: rst -*-
 
-=======================
 logging-mv-integrations
-=======================
+-----------------------
 
-Python logging library for TUNE Multiverse Integrations.
+Python logging extension for TUNE Multiverse Integrations.
 
 
 Badges
@@ -20,7 +19,7 @@ Badges
     * - tests
       - |travis| |coveralls|
     * - package
-      - |version| |supported-versions|
+      - |version| |supported-versions| |requires|
 
 
 .. |docs| image:: https://readthedocs.org/projects/logging-mv-integrations/badge/?style=flat
@@ -60,6 +59,7 @@ Install
 .. code-block:: bash
 
     pip install logging_mv_integrations
+
 
 Architecture
 ------------
@@ -221,17 +221,15 @@ Logging JSON Example Output
     "test": "__main__"}
 
 
-
 Requirements
 ------------
 
-``logging-mv-integrations`` module is built upon Python 3 and is build upon
-several custom modules that are held within PyPI: https://pypi.python.org/pypi
+``logging-mv-integrations`` module is built upon Python 3 and has dependencies upon
+several Python modules available within `Python Package Index PyPI <https://pypi.python.org/pypi>`_.
 
 .. code-block:: bash
 
     make install-requirements
-
 
 or
 
@@ -242,8 +240,8 @@ or
     python3 -m pip install --upgrade -r requirements.txt
 
 
-Packages
-^^^^^^^^
+Python Packages
+^^^^^^^^^^^^^^^
 
 - coloredlogs: https://pypi.python.org/pypi/coloredlogs
 - pprintpp: https://pypi.python.org/pypi/pprintpp
