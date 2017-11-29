@@ -240,8 +240,8 @@ or
     python3 -m pip install --upgrade -r requirements.txt
 
 
-Python Packages
-^^^^^^^^^^^^^^^
+Dependencies
+^^^^^^^^^^^^
 
 - coloredlogs: https://pypi.python.org/pypi/coloredlogs
 - pprintpp: https://pypi.python.org/pypi/pprintpp
