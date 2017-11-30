@@ -71,7 +71,7 @@ setup(
     author_email='jefft@tune.com',
     url='https://github.com/TuneLab/logging-mv-integrations',
     download_url='https://github.com/TuneLab/logging-mv-integrations/archive/v{0}.tar.gz'.format(version),
-    keywords=["tune", "multiverse", "logging"],
+    keywords="logging tune multiverse",
     license='MIT License',
     zip_safe=False,
     include_package_data=True,
