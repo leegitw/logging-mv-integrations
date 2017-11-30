@@ -65,7 +65,7 @@ with codecs.open('HISTORY.rst', 'r', 'utf-8') as f:
 setup(
     name='logging-mv-integrations',
     version=version,
-    description='Python logging extension for TUNE Multiverse Integrations.',
+    description="Extension to Python `logging` functionality intended for TUNE Multiverse Integrations.",
     long_description=readme + '\n\n' + history,
     author='TUNE Inc.',
     author_email='jefft@tune.com',

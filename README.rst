@@ -3,7 +3,8 @@
 logging-mv-integrations
 -----------------------
 
-Python logging extension for TUNE Multiverse Integrations.
+Extension to Python `logging <https://docs.python.org/3/library/logging.html>`_ functionality
+intended for TUNE Multiverse Integrations.
 
 
 Badges
@@ -14,8 +15,8 @@ Badges
 .. list-table::
     :stub-columns: 1
 
-    * - docs
-      - |license|
+    * - info
+      - |license| |hits| |contributors|
     * - tests
       - |travis| |coveralls|
     * - package
@@ -25,6 +26,14 @@ Badges
 .. |docs| image:: https://readthedocs.org/projects/logging-mv-integrations/badge/?style=flat
     :alt: Documentation Status
     :target: https://readthedocs.org/projects/logging-mv-integrations
+
+.. |hits| image:: http://hits.dwyl.io/TuneLab/logging-mv-integrations.svg
+    :alt: Hit Count
+    :target: http://hits.dwyl.io/TuneLab/logging-mv-integrations
+
+.. |contributors| image:: https://img.shields.io/github/contributors/TuneLab/logging-mv-integrations.svg
+    :alt: Contributors
+    :target: https://github.com/TuneLab/logging-mv-integrations/graphs/contributors
 
 .. |license| image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :alt: License Status

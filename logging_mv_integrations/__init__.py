@@ -4,12 +4,12 @@
 #  @namespace logging_mv_integrations
 
 __title__ = 'logging-mv-integrations'
-__version__ = '0.4.6'
-__build__ = 0x000406
+__version__ = '0.5.0'
+__build__ = 0x000500
 __version_info__ = tuple(__version__.split('.'))
 
 __author__ = 'jefft@tune.com'
-__license__ = 'Apache 2.0'
+__license__ = 'MIT License'
 
 __python_required_version__ = (3, 0)
 
