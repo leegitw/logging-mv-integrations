@@ -1,6 +1,7 @@
+.. -*- mode: rst -*-
 
-pyhttpstatus-utils
-==================
+logging-mv-integrations
+=======================
 
 .. toctree::
    :maxdepth: 2
