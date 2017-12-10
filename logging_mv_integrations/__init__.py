@@ -4,8 +4,7 @@
 #  @namespace logging_mv_integrations
 
 __title__ = 'logging-mv-integrations'
-__version__ = '0.5.1'
-__build__ = 0x000501
+__version__ = '0.5.2'
 __version_info__ = tuple(__version__.split('.'))
 
 __author__ = 'jefft@tune.com'

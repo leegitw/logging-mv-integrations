@@ -1,7 +1,14 @@
-.. -*- mode: rst -*-
 
-logging-mv-integrations
------------------------
+pyhttpstatus-utils
+==================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+Introduction
+------------
 
 Extension to Python `logging <https://docs.python.org/3/library/logging.html>`_ functionality
 intended for TUNE Multiverse Integrations.
