@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #  @namespace logging-mv-integrations
+#
+#    Copyright (c) 2018 TUNE, Inc.
+#    All rights reserved.
+#
 
 from __future__ import with_statement
 
@@ -69,9 +73,9 @@ setup(
     long_description=readme + '\n\n' + history,
     author='TUNE Inc.',
     author_email='jefft@tune.com',
-    url='https://github.com/TuneLab/logging-mv-integrations',
-    download_url='https://github.com/TuneLab/logging-mv-integrations/archive/v{0}.tar.gz'.format(version),
-    keywords="logging tune multiverse",
+    url='https://github.com/tuneinc/logging-mv-integrations',
+    download_url='https://github.com/tuneinc/logging-mv-integrations/archive/v{0}.tar.gz'.format(version),
+    keywords="logging tune",
     license='MIT License',
     zip_safe=False,
     include_package_data=True,
