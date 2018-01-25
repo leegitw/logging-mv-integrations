@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#  @copyright 2017 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2018 TUNE, Inc. (http://www.tune.com)
 #  @namespace logging_mv_integrations
 
 __title__ = 'logging-mv-integrations'
-__version__ = '0.5.2'
+__version__ = '0.5.3'
 __version_info__ = tuple(__version__.split('.'))
 
 __author__ = 'jefft@tune.com'
 __license__ = 'MIT License'
+__copyright__ = 'Copyright 2018 TUNE, Inc.'
 
 __python_required_version__ = (3, 0)
 
