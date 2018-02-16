@@ -3,9 +3,13 @@
 Release History
 ===============
 
+0.5.4 (2018-02-16)
+------------------
+- migrate to github/TuneLab
+
 0.5.3 (2018-01-25)
 ------------------
-- migrate to github/tuneinc.
+- migrate to github/tuneinc
 
 0.5.2 (2017-12-10)
 ------------------

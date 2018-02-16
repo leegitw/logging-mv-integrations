@@ -31,29 +31,29 @@ Badges
     :alt: Documentation Status
     :target: http://logging-mv-integrations.readthedocs.io
 
-.. |hits| image:: http://hits.dwyl.io/tuneinc/logging-mv-integrations.svg
+.. |hits| image:: http://hits.dwyl.io/TuneLab/logging-mv-integrations.svg
     :alt: Hit Count
-    :target: http://hits.dwyl.io/tuneinc/logging-mv-integrations
+    :target: http://hits.dwyl.io/TuneLab/logging-mv-integrations
 
-.. |contributors| image:: https://img.shields.io/github/contributors/tuneinc/logging-mv-integrations.svg
+.. |contributors| image:: https://img.shields.io/github/contributors/TuneLab/logging-mv-integrations.svg
     :alt: Contributors
-    :target: https://github.com/tuneinc/logging-mv-integrations/graphs/contributors
+    :target: https://github.com/TuneLab/logging-mv-integrations/graphs/contributors
 
 .. |license| image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :alt: License Status
     :target: https://opensource.org/licenses/MIT
 
-.. |travis| image:: https://travis-ci.org/tuneinc/logging-mv-integrations.svg?branch=master
+.. |travis| image:: https://travis-ci.org/TuneLab/logging-mv-integrations.svg?branch=master
     :alt: Travis-CI Build Status
-    :target: https://travis-ci.org/tuneinc/logging-mv-integrations
+    :target: https://travis-ci.org/TuneLab/logging-mv-integrations
 
-.. |coveralls| image:: https://coveralls.io/repos/tuneinc/logging-mv-integrations/badge.svg?branch=master&service=github
+.. |coveralls| image:: https://coveralls.io/repos/TuneLab/logging-mv-integrations/badge.svg?branch=master&service=github
     :alt: Code Coverage Status
-    :target: https://coveralls.io/r/tuneinc/logging-mv-integrations
+    :target: https://coveralls.io/r/TuneLab/logging-mv-integrations
 
-.. |requires| image:: https://requires.io/github/tuneinc/logging-mv-integrations/requirements.svg?branch=master
+.. |requires| image:: https://requires.io/github/TuneLab/logging-mv-integrations/requirements.svg?branch=master
     :alt: Requirements Status
-    :target: https://requires.io/github/tuneinc/logging-mv-integrations/requirements/?branch=master
+    :target: https://requires.io/github/TuneLab/logging-mv-integrations/requirements/?branch=master
 
 .. |version| image:: https://img.shields.io/pypi/v/logging_mv_integrations.svg?style=flat
     :alt: PyPI Package latest release
